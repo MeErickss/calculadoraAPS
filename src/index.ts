@@ -1,4 +1,4 @@
-import Display from "./display";
+import Display from "./Display";
 
 const d = new Display()
 
