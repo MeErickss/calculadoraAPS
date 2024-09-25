@@ -1,7 +1,7 @@
-import Key from "./Key";
-
 export default class Keyboard {
-    recieveDigit(digit:number){
-
-    }
+    
+    ligar(){}
+    digitarnumero(numero:number){}
+    somar(){}
+    exibirRestultado(){}
 }

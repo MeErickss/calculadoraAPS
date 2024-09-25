@@ -1,4 +1,4 @@
-import Display from "./Display";
+import Display from "./Tela";
 
 const d = new Display()
 
