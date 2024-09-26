@@ -1,6 +1,18 @@
-export default class Display {
-    showNumber(value: number):void{
-        console.log(value)
+import Digito from "./Cpu"
+
+
+export interface Tela {
+    mostrarDigito(digito: Digito): void
+    limpa():void
+}
+
+export default class Display implements Tela{
+    mostrarDigito(digito: Digito): void {
+        console.log(digito)
+    }
+
+    limpa(): void {
+        console.clear()
     }
 }
 
@@ -19,3 +31,7 @@ d.showNumber(123.45)
 
 var d1 = new MinhaDisplay()
 d1.showNumber(123.45)
+
+var d2: Display = new MinhaDisplay()
+d2 = d1
+d1 = d2 as MinhaDisplay
