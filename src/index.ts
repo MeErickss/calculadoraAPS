@@ -2,6 +2,6 @@ import Display from "./Tela";
 
 const d = new Display()
 
-d.showNumber(1234)
+d.mostra(1234)
 d.clear()
-d.showNumber(4321)
+d.mostra(4321)
