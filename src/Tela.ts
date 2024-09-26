@@ -1,6 +1,6 @@
-import Digito, Operacao, Controle from "./Cpu"
+import Digito from "./Cpu"
 
-export default class Display {
+export default class Tela {
     mostra(digito:Digito){
         console.log(digito)
     }

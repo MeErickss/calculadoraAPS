@@ -1,4 +1,4 @@
-export default class Keyboard {
+export default class Teclado {
     
     ligar(){}
     digitarnumero(numero:number){}
