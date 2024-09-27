@@ -4,7 +4,7 @@ import { Digito, Tela } from "./Calculadora";
 
 export default class TelaGrupo22 implements Tela {
 
- mostrarDigito(digito: Digito): void {
+ mostreDigito(digito: Digito): void {
 
  console.log(digito);
 
