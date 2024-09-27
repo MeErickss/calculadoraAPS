@@ -5,9 +5,9 @@ export enum Digito { ZERO = 0, UM, DOIS, TRÊS, QUATRO, CINCO, SEIS, SETE, OITO,
   export enum Controle { DESATIVAÇÃO, ATIVAÇÃO_LIMPEZA_ERRO, MEMÓRIA_LEITURA_LIMPEZA, MEMÓRIA_SOMA, MEMÓRIA_SUBTRAÇÃO, SEPARADOR_DECIMAL }
   
   export interface Tela {
-    mostre(digito: Digito): void;
-    limpe(): void;
-  }
+    mostrarDigito(digito: Digito): void;
+    limpa(): void;
+   }
   
   export interface Teclado {
     digite(digito: Digito): void;

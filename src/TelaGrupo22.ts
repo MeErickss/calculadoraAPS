@@ -1,12 +1,19 @@
-import Digito from "./CpuGrupo22"
+import { Digito, Tela } from "./Calculadora";
 
 
-export default class Tela {
-    mostre(digito:Digito){
-        console.log(digito)
-    }
 
-    limpe(){
-        console.clear()
-    }
+export default class TelaGrupo22 implements Tela {
+
+ mostrarDigito(digito: Digito): void {
+
+ console.log(digito);
+
+ }
+
+ limpa(): void {
+
+ console.clear();
+
+ }
+
 }
