@@ -1,4 +1,4 @@
-import Digito from "./Cpu"
+import Digito from "./CpuGrupo22"
 
 
 export default class Tela {
