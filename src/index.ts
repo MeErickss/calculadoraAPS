@@ -1,4 +1,4 @@
-import Digito from "./CpuGrupo22"
+import Digito from "./cpuGrupoB4"
 
 
 export interface IDisplay {

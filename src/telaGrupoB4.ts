@@ -1,4 +1,4 @@
-import { Digito, Tela } from "./Calculadora";
+import { Digito, Tela } from "./calculadora";
 
 
 
