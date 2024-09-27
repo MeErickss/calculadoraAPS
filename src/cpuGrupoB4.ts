@@ -1,11 +1,14 @@
-enum Controle { DESATIVACAO, ATIVACAO_LIMPEZA_ERROR, MEMORIA_LEITURA_LIMPEZA, MEMORIA_SOMA, MEMORIA_SUBTRACAO, SEPARADOR_DECIMAL }
+import { Controle, Cpu, Digito, Operação } from "./calculadora"
 
-enum Digito { ZERO, UM, DOIS, TRES, QUATRO, CINCO, SEIS, SETE, OITO, NOVE }
 
-enum Operacao { SOMA, SUBTRACAO, MULTIPLICACAO, DIVISAO, RAIZ_QUADRADA, PERCENTUAL }
-
-export default class Cpu {
-    recebaDigito(digito: Digito){}
-    recebaOperacao(operacao: Operacao){}
-    recebaControle(controle: Controle){}
+export default class cpu implements Cpu {
+    receba(digito: Digito): void
+    receba(operação: Operação): void
+    receba(controle: Controle): void
+    receba(controle: unknown): void {
+        
+    }
+    reinicie(): void {
+        
+    }
 }

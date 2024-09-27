@@ -1,15 +1,11 @@
-import Controle from "./index"
-import Operacao from "./index"
-import Digito from "./index"
+import { Controle, Digito, Operação, Teclado } from "./calculadora"
 
-export default class Teclado {
-    digiteDigito(digito: Digito){
 
-    }
-    digiteOperacao(operacao: Operacao){
-
-    }
-    digiteControle(controle: Controle){
-
+export default class teclado implements Teclado {
+    digite(digito: Digito): void
+    digite(operação: Operação): void
+    digite(controle: Controle): void
+    digite(controle: unknown): void {
+        
     }
 }
