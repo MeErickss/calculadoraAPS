@@ -1,11 +1,12 @@
 import Digito from "./Cpu"
 
+
 export default class Tela {
-    mostra(digito:Digito){
+    mostre(digito:Digito){
         console.log(digito)
     }
 
-    clear(){
+    limpe(){
         console.clear()
     }
 }

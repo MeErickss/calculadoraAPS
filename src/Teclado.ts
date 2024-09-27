@@ -1,7 +1,15 @@
+import Controle from "./index"
+import Operacao from "./index"
+import Digito from "./index"
+
 export default class Teclado {
-    
-    ligar(){}
-    digitarnumero(numero:number){}
-    somar(){}
-    exibirRestultado(){}
+    digiteDigito(digito: Digito){
+
+    }
+    digiteOperacao(operacao: Operacao){
+
+    }
+    digiteControle(controle: Controle){
+
+    }
 }

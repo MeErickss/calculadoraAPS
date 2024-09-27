@@ -1,43 +1,11 @@
-enum Controle {
-    DESATIVACAO,
-    ATIVACAO_LIMPEZA_ERROR,
-    LIGA_LIMPA_ERRO,
-    MEMORI_LEITURA_LIMPEZA,
-    MEMORIA_SOMA,
-    MEMORIA_SUBTRACAO,
-    SEPARADOR_DECIMAL
-}
+enum Controle { DESATIVACAO, ATIVACAO_LIMPEZA_ERROR, MEMORIA_LEITURA_LIMPEZA, MEMORIA_SOMA, MEMORIA_SUBTRACAO, SEPARADOR_DECIMAL }
 
-enum Digito {
-    ZERO,
-    UM,
-    DOIS,
-    TRES,
-    QUATRO,
-    CINCO,
-    SEIS,
-    SETE,
-    OITO,
-    NOVE
-}
+enum Digito { ZERO, UM, DOIS, TRES, QUATRO, CINCO, SEIS, SETE, OITO, NOVE }
 
-enum Operacao {
-    SOMA,
-    SUBTRACAO,
-    MULTIPLICACAO,
-    DIVISAO,
-    RAIZ
-}
+enum Operacao { SOMA, SUBTRACAO, MULTIPLICACAO, DIVISAO, RAIZ_QUADRADA, PERCENTUAL }
 
 export default class Cpu {
-    ligar(){}
-
-    receberDigito(numero:Digito){}
-
-    receberOperação(operação:Operacao){}
-
-    receberControle(controle:Controle){}
-
-    calculaResultado(){}
-
+    recebaDigito(digito: Digito){}
+    recebaOperacao(operacao: Operacao){}
+    recebaControle(controle: Controle){}
 }
