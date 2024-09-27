@@ -2,7 +2,7 @@ import { Digito, Tela } from "./calculadora";
 
 
 
-export default class TelaGrupo22 implements Tela {
+export default class telaGrupoB4 implements Tela {
 
  mostreDigito(digito: Digito): void {
 
