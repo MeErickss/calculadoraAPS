@@ -8,6 +8,7 @@ export default class cpu implements Cpu {
     receba(controle: unknown): void {
         
     }
+   
     reinicie(): void {
         
     }
