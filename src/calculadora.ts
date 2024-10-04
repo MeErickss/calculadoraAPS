@@ -1,34 +1,3 @@
-// export enum Digito { ZERO = 0, UM, DOIS, TRÊS, QUATRO, CINCO, SEIS, SETE, OITO, NOVE }
-  
-//   export enum Operação { SOMA, SUBTRAÇÃO, MULTIPLICAÇÃO, DIVISÃO, RAIZ_QUADRADA, PERCENTUAL }
-  
-//   export enum Controle { DESATIVAÇÃO, ATIVAÇÃO_LIMPEZA_ERRO, MEMÓRIA_LEITURA_LIMPEZA, MEMÓRIA_SOMA, MEMÓRIA_SUBTRAÇÃO, SEPARADOR_DECIMAL }
-  
-//   export interface Tela {
-//     mostreDigito(digito: Digito): void;
-//     limpa(): void;
-//    }
-  
-//   export interface Teclado {
-//     digite(digito: Digito): void;
-//     digite(operação: Operação): void;
-//     digite(controle: Controle): void;
-//   }
-  
-//   export interface Cpu {
-//     receba(digito: Digito): void;
-//     receba(operação: Operação): void;
-//     receba(controle: Controle): void;
-//     reinicie(): void;
-//   }
-  
-//   export interface Calculadora {
-//     tela: Tela;
-//     teclado: Teclado;
-//     cpu: Cpu;
-//   }
-
-// aula dia 02/10
 export enum Digito {
   ZERO = 0,
   UM,
@@ -58,6 +27,7 @@ export enum Controle {
   MEMÓRIA_SOMA,
   MEMÓRIA_SUBTRAÇÃO,
   SEPARADOR_DECIMAL,
+  IGUAL,
 }
 
 export interface Tela {
@@ -70,8 +40,8 @@ export interface Teclado {
   digiteOperacao(operação: Operação): void;
   digiteControle(controle: Controle): void;
 
-  definaCpu(cpu: Cpu): void;
-  obtenhaCpu(): Cpu;
+  definaCpu(cpu: Cpu | undefined): void;
+  obtenhaCpu(): Cpu | undefined;
 }
 
 export interface Cpu {
@@ -80,17 +50,17 @@ export interface Cpu {
   recebaControle(controle: Controle): void;
   reinicie(): void;
 
-  definaTela(tela: Tela): void;
-  obtenhaTela(): Tela;
+  definaTela(tela: Tela | undefined): void;
+  obtenhaTela(): Tela | undefined;
 }
 
 export interface Calculadora {
-  definaTela(tela: Tela): void;
-  obtenhaTela(): Tela;
+  definaTela(tela: Tela | undefined): void;
+  obtenhaTela(): Tela | undefined;
 
-  definaCpu(cpu: Cpu): void;
-  obtenhaCpu(): Cpu;
+  definaCpu(cpu: Cpu | undefined): void;
+  obtenhaCpu(): Cpu | undefined;
 
-  definaTeclado(teclado: Teclado): void;
-  obtenhaTeclado(): Teclado;
+  definaTeclado(teclado: Teclado | undefined): void;
+  obtenhaTeclado(): Teclado | undefined;
 }
