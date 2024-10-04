@@ -2,12 +2,12 @@ import { Digito, Tela } from "./calculadora";
 
 
 
-export default class telaGrupoB4 implements Tela {
-    mostreDigito(digito: Digito): void {
-        
+export default class TelaB4 implements Tela {
+    mostre(digito: Digito): void {
+        throw new Error("Method not implemented.");
     }
-    
-    limpa(): void {
-        
+    limpe(): void {
+        throw new Error("Method not implemented.");
     }
+   
 }
