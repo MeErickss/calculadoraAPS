@@ -14,11 +14,16 @@ export default class CpuB4 implements Cpu {
             case Operação.RAIZ_QUADRADA: return "**0.5"
         }
     }
+
+    calcular = (expressao: string): number => {
+        const func = new Function('return ' + expressao);
+        return func();
+    };
+
     mDigito = ""
     pDigito = ""
     sDigito = ""
     op: Operação|undefined = undefined
-    resultado = ""
 
     constructor(tela: Tela) {
         this.definaTela(tela);
@@ -57,15 +62,15 @@ export default class CpuB4 implements Cpu {
         if (this.op != Operação.RAIZ_QUADRADA) {
             console.log(`${this.pDigito},${this.opToString(this.op||Operação.SOMA)},${this.sDigito}`)
 
-            this.resultado = eval(`${this.pDigito}${this.opToString(this.op||Operação.SOMA)}${this.sDigito}`);
+            this.pDigito = String(this.calcular(`${this.pDigito}${this.opToString(this.op||Operação.SOMA)}${this.sDigito}`));
         } else if(this.op == Operação.RAIZ_QUADRADA){
             console.log(`(${this.pDigito},${this.opToString(this.op||Operação.RAIZ_QUADRADA)}`)
-            this.resultado = eval(`(${this.pDigito}${this.opToString(this.op||Operação.RAIZ_QUADRADA)}`);
+            this.pDigito = String(this.calcular(`(${this.pDigito}${this.opToString(this.op||Operação.RAIZ_QUADRADA)}`));
         } else{
             console.log("a")
-            this.resultado = eval(`(${this.pDigito}${this.opToString(this.op||Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`);
+            this.pDigito = String(this.calcular(`(${this.pDigito}${this.opToString(this.op||Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`));
         }
-        console.log(this.resultado)
+        console.log(this.pDigito)
     } 
 
     private ehUnario(operação: Operação){
@@ -78,10 +83,10 @@ export default class CpuB4 implements Cpu {
         this.mDigito = ""
     }
     adicionaMemoria(){
-        this.mDigito = this.resultado
+        this.mDigito = this.pDigito
     }
     lerMemoria(){
-        this.resultado = this.mDigito
+        this.pDigito = this.mDigito
     }
 
     reinicie(): void {
