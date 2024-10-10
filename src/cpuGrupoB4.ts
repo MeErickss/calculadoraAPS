@@ -11,7 +11,7 @@ export default class CpuB4 implements Cpu {
             case Operação.DIVISÃO: return "/"
             case Operação.PERCENTUAL: return "*"
             case Operação.MULTIPLICAÇÃO: return "*"
-            case Operação.RAIZ_QUADRADA: return "**0.2"
+            case Operação.RAIZ_QUADRADA: return "**0.5"
         }
     }
     mDigito = ""
@@ -32,10 +32,12 @@ export default class CpuB4 implements Cpu {
         }
     }
     recebaOperacao(operação: Operação): void {
-        if(this.pDigito != "" && this.sDigito != ""){
-            this.realizaCalculo()
+        if (this.op != Operação.RAIZ_QUADRADA){
+            if(this.pDigito != "" && this.sDigito != ""){
+                this.realizaCalculo()
+            }
+            this.op = operação
         }
-        this.op = operação
     }
     recebaControle(controle: Controle): void {
         switch (controle) {
@@ -49,11 +51,15 @@ export default class CpuB4 implements Cpu {
         }
     }
     realizaCalculo(){
-        if (this.op != Operação.RAIZ_QUADRADA){
-            this.resultado = eval(`${this.pDigito}${this.opToString(this.op||Operação.SOMA)}${this.sDigito}`)
-        } else if(this.op == Operação.PERCENTUAL){
-            this.resultado = eval(`${this.pDigito}${this.opToString(this.op)}`)
-        } else {}
+        console.log(this.op)
+        console.log(Operação.MULTIPLICAÇÃO)
+        if (this.op && this.op !== Operação.RAIZ_QUADRADA) {
+            this.resultado = eval(`${this.pDigito}${this.opToString(this.op)}${this.sDigito}`);
+        } else if (this.op === Operação.PERCENTUAL){
+            this.resultado = eval(`(${this.pDigito}${this.opToString(this.op)}${this.sDigito}) / 100`);
+        } else if (this.op === Operação.RAIZ_QUADRADA) {
+            this.resultado = eval(`${this.pDigito}${this.opToString(this.op)}`);
+        }
         console.log(this.resultado)
     } 
     adicionaDecimal(){
