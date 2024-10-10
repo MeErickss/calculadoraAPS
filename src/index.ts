@@ -45,3 +45,6 @@ cpu.recebaDigito(Digito.DOIS)
 cpu.recebaOperacao(Operação.MULTIPLICAÇÃO)
 cpu.recebaDigito(Digito.UM)
 cpu.recebaControle(Controle.IGUAL)
+
+cpu.recebaDigito(Digito.QUATRO)
+cpu.recebaOperacao(Operação.RAIZ_QUADRADA)
