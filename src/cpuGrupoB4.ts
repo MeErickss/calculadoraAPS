@@ -4,26 +4,17 @@ import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora"
 export default class CpuB4 implements Cpu {
 
     tela: Tela | undefined;
-    dict = {
-        "IGUAL":this.realizaCalculo(),
-        "DESATIVAÇÃO":this.realizaCalculo() ,
-        "ATIVAÇÃO_LIMPEZA_ERRO":this.realizaCalculo(),
-        "MEMÓRIA_LEITURA_LIMPEZA":this.lerMemoria(),
-        "MEMÓRIA_SOMA":this.adicionaMemoria(),
-        "MEMÓRIA_SUBTRAÇÃO":this.limpaMemoria(),
-        "SEPARADOR_DECIMAL":this.adicionaDecimal()
-    }
-    private opToString(operação:Operação):string{
+    opToString(operação:Operação):string{
         switch (operação) {
             case Operação.SOMA: return "+"
             case Operação.SUBTRAÇÃO: return "-"
             case Operação.DIVISÃO: return "/"
-            case Operação.PERCENTUAL: return "%"
+            case Operação.PERCENTUAL: return "*"
             case Operação.MULTIPLICAÇÃO: return "*"
-            case Operação.RAIZ_QUADRADA: return "**"
+            case Operação.RAIZ_QUADRADA: return "**0.2"
         }
     }
-    memoria = []
+    mDigito = ""
     pDigito = ""
     sDigito = ""
     op: Operação|undefined = undefined
@@ -54,25 +45,28 @@ export default class CpuB4 implements Cpu {
             case Controle.MEMÓRIA_SOMA:this.adicionaMemoria();break;
             case Controle.MEMÓRIA_SUBTRAÇÃO:this.limpaMemoria();break;
             case Controle.SEPARADOR_DECIMAL:this.adicionaDecimal();break;
-            
+            case Controle.IGUAL:this.realizaCalculo();break;
         }
-        throw new Error("Method not implemented.");
     }
     realizaCalculo(){
-        let resultado = eval(this.pDigito) + eval(this.opToString(this.op?this.op:Operação.SOMA)) + eval(this.sDigito)
-        return resultado     
+        if (this.op != Operação.RAIZ_QUADRADA){
+            this.resultado = eval(`${this.pDigito}${this.opToString(this.op||Operação.SOMA)}${this.sDigito}`)
+        } else if(this.op == Operação.PERCENTUAL){
+            this.resultado = eval(`${this.pDigito}${this.opToString(this.op)}`)
+        } else {}
+        console.log(this.resultado)
     } 
     adicionaDecimal(){
         if(this.pDigito != ""){this.pDigito += "."} else {this.sDigito += "."}
     }
     limpaMemoria(){
-        let memoria = ""
+        this.mDigito = ""
     }
     adicionaMemoria(){
-        let memoria = this.resultado
+        this.mDigito = this.resultado
     }
     lerMemoria(){
-        let restultado = this.memoria
+        this.resultado = this.mDigito
     }
 
     reinicie(): void {

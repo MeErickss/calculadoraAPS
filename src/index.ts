@@ -1,5 +1,6 @@
-import Digito from "./cpuGrupoB4"
-
+import CpuB4 from "./cpuGrupoB4";
+import { Digito, Operação, Controle } from "./calculadora"
+import  TelaB4  from "./telaGrupoB4"
 
 export interface IDisplay {
     showNumber(value: number) : void;
@@ -27,12 +28,20 @@ class MinhaDisplay extends Display{
     }
 }
 
-const d = new Display();
-d.showNumber(123.45);
+// const d = new Display();
+// d.showNumber(123.45);
 
-var d1 = new MinhaDisplay();
-d1.showNumber(123.45);
+// var d1 = new MinhaDisplay();
+// d1.showNumber(123.45);
 
-var d2: Display = new MinhaDisplay() // criando objeto tipo Display
-d2 = d1
-d1 = d2 as MinhaDisplay; //conversao de tipo com Type Casting
+// var d2: Display = new MinhaDisplay() // criando objeto tipo Display
+// d2 = d1
+// d1 = d2 as MinhaDisplay; //conversao de tipo com Type Casting
+
+const tela = new TelaB4()
+const cpu = new CpuB4(tela)
+
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaOperacao(Operação.MULTIPLICAÇÃO)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.IGUAL)
