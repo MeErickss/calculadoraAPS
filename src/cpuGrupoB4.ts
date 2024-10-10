@@ -15,7 +15,7 @@ export default class CpuB4 implements Cpu {
         }
     }
 
-    calcular = (expressao: string): number => {
+    converte = (expressao: string): number => {
         const func = new Function('return ' + expressao);
         return func();
     };
@@ -60,17 +60,14 @@ export default class CpuB4 implements Cpu {
     }
     realizaCalculo(){
         if (this.op != Operação.RAIZ_QUADRADA) {
-            console.log(`${this.pDigito},${this.opToString(this.op||Operação.SOMA)},${this.sDigito}`)
-
-            this.pDigito = String(this.calcular(`${this.pDigito}${this.opToString(this.op||Operação.SOMA)}${this.sDigito}`));
+            this.pDigito = String(this.converte(`${this.pDigito}${this.opToString(this.op||Operação.SOMA)}${this.sDigito}`));
         } else if(this.op == Operação.RAIZ_QUADRADA){
-            console.log(`(${this.pDigito},${this.opToString(this.op||Operação.RAIZ_QUADRADA)}`)
-            this.pDigito = String(this.calcular(`(${this.pDigito}${this.opToString(this.op||Operação.RAIZ_QUADRADA)}`));
+            this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op||Operação.RAIZ_QUADRADA)}`));
         } else{
-            console.log("a")
-            this.pDigito = String(this.calcular(`(${this.pDigito}${this.opToString(this.op||Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`));
+            this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op||Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`));
         }
         console.log(this.pDigito)
+        this.sDigito = ""
     } 
 
     private ehUnario(operação: Operação){
