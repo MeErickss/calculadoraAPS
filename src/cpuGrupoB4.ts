@@ -69,7 +69,6 @@ export default class CpuB4 implements Cpu {
         }
         console.log(this.pDigito)
         this.sDigito = ""
-        this.op = undefined
     } 
 
     private ehUnario(operação: Operação | undefined){
