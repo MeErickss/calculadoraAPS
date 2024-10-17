@@ -9,7 +9,7 @@ export default class CpuB4 implements Cpu {
             case Operação.SOMA: return "+"
             case Operação.SUBTRAÇÃO: return "-"
             case Operação.DIVISÃO: return "/"
-            case Operação.PERCENTUAL: return "%"
+            case Operação.PERCENTUAL: return "*"
             case Operação.MULTIPLICAÇÃO: return "*"
             case Operação.RAIZ_QUADRADA: return "**0.5"
         }
@@ -24,6 +24,7 @@ export default class CpuB4 implements Cpu {
     pDigito = ""
     sDigito = ""
     op: Operação|undefined = undefined
+    controleDecimal: boolean = false
 
     constructor(tela: Tela) {
         this.definaTela(tela);
@@ -38,11 +39,11 @@ export default class CpuB4 implements Cpu {
         }
     }
     recebaOperacao(operação: Operação): void {
-        if (this.op != Operação.RAIZ_QUADRADA){
-            if((this.pDigito != "" && this.sDigito != "")||this.ehUnario(operação)){
+        if (this.ehUnario(this.op) == false){
+            if((this.pDigito != "" && this.sDigito != "")){
                 this.realizaCalculo()
             }
-        } else {
+        } else if(this.pDigito != ""){
             this.realizaCalculo()
         }
         this.op = operação
@@ -59,7 +60,7 @@ export default class CpuB4 implements Cpu {
         }
     }
     realizaCalculo(){
-        if (this.op != Operação.RAIZ_QUADRADA) {
+        if (this.ehUnario(this.op) == false) {
             this.pDigito = String(this.converte(`${this.pDigito}${this.opToString(this.op||Operação.SOMA)}${this.sDigito}`));
         } else if(this.op == Operação.RAIZ_QUADRADA){
             this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op||Operação.RAIZ_QUADRADA)}`));
@@ -68,10 +69,11 @@ export default class CpuB4 implements Cpu {
         }
         console.log(this.pDigito)
         this.sDigito = ""
+        this.op = undefined
     } 
 
-    private ehUnario(operação: Operação){
-        return operação === Operação.RAIZ_QUADRADA||operação === Operação.PERCENTUAL
+    private ehUnario(operação: Operação | undefined){
+        return operação == Operação.RAIZ_QUADRADA||operação == Operação.PERCENTUAL
     }
     adicionaDecimal(){
         if(this.pDigito != ""){this.pDigito += "."} else {this.sDigito += "."}

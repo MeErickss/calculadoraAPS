@@ -13,7 +13,7 @@ class CpuB4 {
         }
     }
     constructor(tela) {
-        this.calcular = (expressao) => {
+        this.converte = (expressao) => {
             const func = new Function('return ' + expressao);
             return func();
         };
@@ -69,18 +69,16 @@ class CpuB4 {
     }
     realizaCalculo() {
         if (this.op != calculadora_1.Operação.RAIZ_QUADRADA) {
-            console.log(`${this.pDigito},${this.opToString(this.op || calculadora_1.Operação.SOMA)},${this.sDigito}`);
-            this.pDigito = String(this.calcular(`${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.SOMA)}${this.sDigito}`));
+            this.pDigito = String(this.converte(`${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.SOMA)}${this.sDigito}`));
         }
         else if (this.op == calculadora_1.Operação.RAIZ_QUADRADA) {
-            console.log(`(${this.pDigito},${this.opToString(this.op || calculadora_1.Operação.RAIZ_QUADRADA)}`);
-            this.pDigito = String(this.calcular(`(${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.RAIZ_QUADRADA)}`));
+            this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.RAIZ_QUADRADA)}`));
         }
         else {
-            console.log("a");
-            this.pDigito = String(this.calcular(`(${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`));
+            this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`));
         }
         console.log(this.pDigito);
+        this.sDigito = "";
     }
     ehUnario(operação) {
         return operação === calculadora_1.Operação.RAIZ_QUADRADA || operação === calculadora_1.Operação.PERCENTUAL;
