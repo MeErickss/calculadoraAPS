@@ -1,5 +1,5 @@
 export enum Digito {
-  ZERO = 0,
+  ZERO,
   UM,
   DOIS,
   TRÊS,
@@ -28,6 +28,11 @@ export enum Controle {
   MEMÓRIA_SUBTRAÇÃO,
   SEPARADOR_DECIMAL,
   IGUAL,
+}
+
+export enum Sinal {
+  POSITIVO,
+  NEGATIVO,
 }
 
 export interface Tela {

@@ -1,4 +1,4 @@
-import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora"
+import { Controle, Cpu, Digito, Operação, Tela, Sinal } from "./calculadora"
 
 
 export default class CpuB4 implements Cpu {
@@ -67,15 +67,17 @@ export default class CpuB4 implements Cpu {
         } else{
             this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op||Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`));
         }
-        console.log(this.pDigito)
+        console.log(`${this.pDigito} ${this.op} ${this.sDigito}`)
         this.sDigito = ""
+        this.op = undefined
+        
     } 
 
     private ehUnario(operação: Operação | undefined){
         return operação == Operação.RAIZ_QUADRADA||operação == Operação.PERCENTUAL
     }
     adicionaDecimal(){
-        if(this.pDigito != ""){this.pDigito += "."} else {this.sDigito += "."}
+        if(this.pDigito != "" && !(this.pDigito.includes(".") && this.op == undefined && this.sDigito == "")){this.pDigito += "."} else if(!(this.sDigito.includes("."))){this.sDigito += "."}
     }
     limpaMemoria(){
         this.mDigito = ""

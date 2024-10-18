@@ -41,11 +41,15 @@ class MinhaDisplay extends Display{
 const tela = new TelaB4()
 const cpu = new CpuB4(tela)
 
-cpu.recebaDigito(Digito.TRÊS)
+
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.SEIS)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.SEIS)
+cpu.recebaControle(Controle.IGUAL)
+
 cpu.recebaOperacao(Operação.MULTIPLICAÇÃO)
 cpu.recebaDigito(Digito.DOIS)
 cpu.recebaControle(Controle.IGUAL)
 
-cpu.recebaDigito(Digito.UM)
-cpu.recebaDigito(Digito.SEIS)
-cpu.recebaOperacao(Operação.RAIZ_QUADRADA)
