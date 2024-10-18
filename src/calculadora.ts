@@ -36,8 +36,12 @@ export enum Sinal {
 }
 
 export interface Tela {
-  mostre(digito: Digito): void;
-  limpe(): void;
+  mostre(digito: Digito): void
+  mostreSeparadorDecimal(): void
+  mostreSinal(sinal: Sinal): void
+  mostreErro(): void
+  mostreMemoria(): void
+  limpe(): void
 }
 
 export interface Teclado {
