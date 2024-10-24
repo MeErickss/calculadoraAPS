@@ -1,71 +1,71 @@
 import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora"
 
 export default class CpuB4 implements Cpu {
-    tela: Tela | undefined;
-    digitoMemoria = "";
-    digitoUm = "";
-    digitoDois = "";
-    resultado: string| undefined = ""
-    op: Operação | undefined = undefined;
-    controleDecimal: boolean = false;
-    leLimpa: boolean = false 
+    tela: Tela | undefined
+    digitoMemoria = ""
+    digitoUm = ""
+    digitoDois = ""
+    resultado: string | undefined = ""
+    op: Operação | undefined = undefined
+    controleDecimal: boolean = false
+    leLimpa: boolean = false
     completo: boolean = false
 
     constructor(tela: Tela) {
-        this.definaTela(tela);
+        this.definaTela(tela)
     }
 
     opToString(operação: Operação): string {
         switch (operação) {
-            case Operação.SOMA: return "+";
-            case Operação.SUBTRAÇÃO: return "-";
-            case Operação.DIVISÃO: return "/";
-            case Operação.PERCENTUAL: return "* 0.01"; // Para cálculo de porcentagem
-            case Operação.MULTIPLICAÇÃO: return "*";
-            case Operação.RAIZ_QUADRADA: return "**0.5";
-            default: return "";
+            case Operação.SOMA: return "+"
+            case Operação.SUBTRAÇÃO: return "-"
+            case Operação.DIVISÃO: return "/"
+            case Operação.PERCENTUAL: return "* 0.01"
+            case Operação.MULTIPLICAÇÃO: return "*"
+            case Operação.RAIZ_QUADRADA: return "**0.5"
+            default: return ""
         }
     }
 
     converte = (expressao: string): number => {
         try {
-            const func = new Function('return ' + expressao);
-            return func();
+            const func = new Function('return ' + expressao)
+            return func()
         } catch (e) {
-            console.error("Erro na conversão da expressão:", e);
-            return 0; // Retorne um valor padrão ou trate o erro como preferir
+            console.error("Erro na conversão da expressão:", e)
+            return 0
         }
-    };
+    }
 
     recebaDigito(digito: Digito): void {
-        if(this.completo == true){this.digitoDois = ""; this.completo = false}
-            if (this.digitoDois === "" && this.op === undefined) {
-                this.digitoUm += digito;
-            } else {
-                this.digitoDois += digito;
-            }
+        if (this.completo == true) { this.digitoDois = ""; this.completo = false }
+        if (this.digitoDois === "" && this.op === undefined) {
+            this.digitoUm += digito
+        } else {
+            this.digitoDois += digito
+        }
     }
 
     recebaOperacao(operação: Operação): void {
         if (!this.ehUnario(this.op)) {
             if (this.digitoUm !== "" && this.digitoDois !== "") {
-                this.realizaCalculo();
+                this.realizaCalculo()
             }
         } else if (this.digitoUm !== "") {
-            this.realizaCalculo();
+            this.realizaCalculo()
         }
-        this.op = operação;
+        this.op = operação
     }
 
     recebaControle(controle: Controle): void {
         switch (controle) {
             case Controle.DESATIVAÇÃO:
-            case Controle.ATIVAÇÃO_LIMPEZA_ERRO:this.limpa();break;
-            case Controle.MEMÓRIA_LEITURA_LIMPEZA:this.lerMemoria();break;
-            case Controle.MEMÓRIA_SOMA:this.adicionaMemoria();break;
-            case Controle.MEMÓRIA_SUBTRAÇÃO:this.limpaMemoria();break;
-            case Controle.SEPARADOR_DECIMAL:this.adicionaDecimal();break;
-            case Controle.IGUAL:this.realizaCalculo();break;
+            case Controle.ATIVAÇÃO_LIMPEZA_ERRO: this.limpa(); break
+            case Controle.MEMÓRIA_LEITURA_LIMPEZA: this.lerMemoria(); break
+            case Controle.MEMÓRIA_SOMA: this.adicionaMemoria(); break
+            case Controle.MEMÓRIA_SUBTRAÇÃO: this.limpaMemoria(); break
+            case Controle.SEPARADOR_DECIMAL: this.adicionaDecimal(); break
+            case Controle.IGUAL: this.realizaCalculo(); break
         }
     }
 
@@ -77,65 +77,67 @@ export default class CpuB4 implements Cpu {
             this.resultado = String(`${this.digitoUm}${this.opToString(this.op)}`)
             this.digitoUm = String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`))
         } else {
-            this.digitoUm = String(this.converte(`(${this.digitoUm}${this.opToString(this.op||Operação.MULTIPLICAÇÃO)}${this.digitoDois})`))
-            this.resultado = String(`(${this.digitoUm}${this.opToString(this.op||Operação.MULTIPLICAÇÃO)}${this.digitoDois})`)
+            this.digitoUm = String(this.converte(`(${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois})`))
+            this.resultado = String(`(${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois})`)
         }
 
-        console.log(`${this.resultado} = ${this.digitoUm}`); // Adicionado para mostrar o resultado
+        console.log(`${this.resultado} = ${this.digitoUm}`)
 
-        this.digitoDois = "";
-        this.op = undefined;
+        this.digitoDois = ""
+        this.op = undefined
         this.completo = true
     }
 
     private ehUnario(operação: Operação | undefined): boolean {
-        return operação === Operação.RAIZ_QUADRADA || operação === Operação.PERCENTUAL;
+        return operação === Operação.RAIZ_QUADRADA || operação === Operação.PERCENTUAL
     }
 
     adicionaDecimal(): void {
         if (this.digitoDois === "" && !this.digitoUm.includes(".")) {
-            this.digitoUm += ".";
+            this.digitoUm += "."
         } else if (!this.digitoDois.includes(".")) {
-            this.digitoDois += ".";
+            this.digitoDois += "."
         }
     }
 
     limpaMemoria(): void {
-        this.digitoMemoria = "";
+        this.digitoMemoria = ""
     }
 
     adicionaMemoria(): void {
-        this.digitoMemoria = this.digitoUm;
+        this.digitoMemoria = this.digitoUm
     }
 
     lerMemoria(): void {
-        if(this.leLimpa == false){        
+        if (this.leLimpa == false) {
             this.digitoDois = this.digitoUm
-            this.digitoUm = this.digitoMemoria;
+            this.digitoUm = this.digitoMemoria
             this.completo = true
         } else {
             this.digitoMemoria = ""
             this.completo = false
         }
-
     }
 
     reinicie(): void {
-        this.limpa();
-        this.tela ? this.tela.mostre(Digito.ZERO) : null;
+        this.limpa()
+        this.tela ? this.tela.mostre(Digito.ZERO) : null
     }
 
     limpa(): void {
-        this.digitoUm = "";
-        this.digitoDois = "";
-        this.op = undefined;
+        this.digitoUm = ""
+        this.digitoDois = ""
+        this.op = undefined
+        this.digitoMemoria = ""
+        this.completo = false
+        this.leLimpa = false
     }
 
     definaTela(tela: Tela | undefined): void {
-        this.tela = tela;
+        this.tela = tela
     }
 
     obtenhaTela(): Tela | undefined {
-        return this.tela;
+        return this.tela
     }
 }
