@@ -42,14 +42,34 @@ const tela = new TelaB4()
 const cpu = new CpuB4(tela)
 
 
+//cpu.recebaDigito(Digito.DOIS)
+//cpu.recebaDigito(Digito.CINCO)
+//cpu.recebaOperacao(Operação.MULTIPLICAÇÃO)
+//cpu.recebaDigito(Digito.CINCO)
+//cpu.recebaOperacao(Operação.PERCENTUAL)
+//cpu.recebaControle(Controle.IGUAL)
+
+//cpu.recebaDigito(Digito.)
+//cpu.recebaControle(Controle.)
+//cpu.recebaOperacao(Operação.)
+
 cpu.recebaDigito(Digito.UM)
-cpu.recebaDigito(Digito.SEIS)
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
 cpu.recebaOperacao(Operação.SOMA)
 cpu.recebaDigito(Digito.UM)
-cpu.recebaDigito(Digito.SEIS)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 cpu.recebaControle(Controle.IGUAL)
 
-cpu.recebaOperacao(Operação.MULTIPLICAÇÃO)
+cpu.limpa()
+
+cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaDigito(Digito.UM)
 cpu.recebaControle(Controle.IGUAL)
-

@@ -19,21 +19,21 @@ class CpuB4 {
         };
         this.mDigito = "";
         this.pDigito = "";
-        this.sDigito = "";
+        this.digitoDois = "";
         this.op = undefined;
         this.definaTela(tela);
     }
     recebaDigito(digito) {
-        if (this.sDigito == "" && this.op == undefined) {
+        if (this.digitoDois == "" && this.op == undefined) {
             this.pDigito += digito;
         }
         else {
-            this.sDigito += digito;
+            this.digitoDois += digito;
         }
     }
     recebaOperacao(operação) {
         if (this.op != calculadora_1.Operação.RAIZ_QUADRADA) {
-            if ((this.pDigito != "" && this.sDigito != "") || this.ehUnario(operação)) {
+            if ((this.pDigito != "" && this.digitoDois != "") || this.ehUnario(operação)) {
                 this.realizaCalculo();
             }
         }
@@ -69,16 +69,16 @@ class CpuB4 {
     }
     realizaCalculo() {
         if (this.op != calculadora_1.Operação.RAIZ_QUADRADA) {
-            this.pDigito = String(this.converte(`${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.SOMA)}${this.sDigito}`));
+            this.pDigito = String(this.converte(`${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.SOMA)}${this.digitoDois}`));
         }
         else if (this.op == calculadora_1.Operação.RAIZ_QUADRADA) {
             this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.RAIZ_QUADRADA)}`));
         }
         else {
-            this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.MULTIPLICAÇÃO)}${this.sDigito}) / 100`));
+            this.pDigito = String(this.converte(`(${this.pDigito}${this.opToString(this.op || calculadora_1.Operação.MULTIPLICAÇÃO)}${this.digitoDois}) / 100`));
         }
         console.log(this.pDigito);
-        this.sDigito = "";
+        this.digitoDois = "";
     }
     ehUnario(operação) {
         return operação === calculadora_1.Operação.RAIZ_QUADRADA || operação === calculadora_1.Operação.PERCENTUAL;
@@ -88,7 +88,7 @@ class CpuB4 {
             this.pDigito += ".";
         }
         else {
-            this.sDigito += ".";
+            this.digitoDois += ".";
         }
     }
     limpaMemoria() {
