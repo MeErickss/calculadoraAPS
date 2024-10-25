@@ -21,7 +21,7 @@ export default class CpuB4 implements Cpu {
             case Operação.SOMA: return "+"
             case Operação.SUBTRAÇÃO: return "-"
             case Operação.DIVISÃO: return "/"
-            case Operação.PERCENTUAL: return "* 0.01"
+            case Operação.PERCENTUAL: return "*0.01"
             case Operação.MULTIPLICAÇÃO: return "*"
             case Operação.RAIZ_QUADRADA: return "**0.5"
             default: return ""
@@ -39,6 +39,7 @@ export default class CpuB4 implements Cpu {
     }
 
     recebaDigito(digito: Digito): void {
+        this.leLimpa = false
         if (this.completo == true) { this.digitoDois = ""; this.completo = false }
         if (this.digitoDois === "" && this.op === undefined) {
             this.digitoUm += digito
@@ -48,6 +49,7 @@ export default class CpuB4 implements Cpu {
     }
 
     recebaOperacao(operação: Operação): void {
+        this.leLimpa = false
         if (!this.ehUnario(this.op)) {
             if (this.digitoUm !== "" && this.digitoDois !== "") {
                 this.realizaCalculo()
@@ -59,6 +61,7 @@ export default class CpuB4 implements Cpu {
     }
 
     recebaControle(controle: Controle): void {
+        this.leLimpa = false
         switch (controle) {
             case Controle.DESATIVAÇÃO:
             case Controle.ATIVAÇÃO_LIMPEZA_ERRO: this.limpa(); break
@@ -78,8 +81,8 @@ export default class CpuB4 implements Cpu {
             this.resultado = String(`${this.digitoUm}${this.opToString(this.op)}`)
             this.digitoUm = String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`))
         } else {
-            this.digitoUm = String(this.converte(`(${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois})`))
-            this.resultado = String(`(${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois})`)
+            this.resultado = String(`${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois}`)
+            this.digitoUm = String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois}`))
         }
 
         console.log(`${this.resultado} = ${this.digitoUm}`)
@@ -94,6 +97,7 @@ export default class CpuB4 implements Cpu {
     }
 
     adicionaDecimal(): void {
+        this.leLimpa = false
         if (this.digitoDois === "" && !this.digitoUm.includes(".")) {
             this.digitoUm += "."
         } else if (!this.digitoDois.includes(".")) {
@@ -102,10 +106,12 @@ export default class CpuB4 implements Cpu {
     }
 
     limpaMemoria(): void {
+        this.leLimpa = false
         this.digitoMemoria = ""
     }
 
     adicionaMemoria(): void {
+        this.leLimpa = false
         this.digitoMemoria = this.digitoUm
     }
 
