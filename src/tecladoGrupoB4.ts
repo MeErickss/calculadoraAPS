@@ -17,5 +17,4 @@ export default class TecladoB4 implements Teclado {
     obtenhaCpu(): Cpu {
         throw new Error("Method not implemented.");
     }
- 
 }
