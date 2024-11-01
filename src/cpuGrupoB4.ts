@@ -52,10 +52,10 @@ export default class CpuB4 implements Cpu {
         this.leLimpa = false
         if (!this.ehUnario(this.op)) {
             if (this.digitoUm !== "" && this.digitoDois !== "") {
-                this.realizaCalculo()
+                this.calcularResultado()
             }
         } else if (this.digitoUm !== "") {
-            this.realizaCalculo()
+            this.calcularResultado()
         }
         this.op = operação
     }
@@ -69,30 +69,28 @@ export default class CpuB4 implements Cpu {
             case Controle.MEMÓRIA_SOMA: this.controleMemoria("+"); break
             case Controle.MEMÓRIA_SUBTRAÇÃO: this.controleMemoria("-"); break
             case Controle.SEPARADOR_DECIMAL: this.adicionaDecimal(); break
-            case Controle.IGUAL: this.realizaCalculo(); break
+            case Controle.IGUAL: this.finalizarCalculo(); break
         }
     }
 
-    realizaCalculo(): void {
+    calcularResultado(): string {
         if (!this.ehUnario(this.op)) {
-            this.resultado = String(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`)
-            this.digitoUm = String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`))
-            this.digitoDois = ""
+            return String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
         } else if (this.op === Operação.RAIZ_QUADRADA) {
-            this.resultado = String(`${this.digitoUm}${this.opToString(this.op)}`)
-            this.digitoUm = String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`))
-            this.digitoDois = ""
+            return String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`));
         } else {
-            this.resultado = String(`${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois}`)
-            const imutavel = this.digitoUm
-            this.digitoUm = String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois}`))
-            this.digitoDois = imutavel
+            return String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois}`));
         }
-
-        console.log(`${this.resultado} = ${this.digitoUm}`)
-
-        this.op = undefined
-        this.completo = true
+    }
+    
+    finalizarCalculo(): void {
+        this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
+        this.digitoUm = this.calcularResultado();
+        this.digitoDois = "";
+        this.op = undefined;
+        this.completo = true;
+    
+        console.log(`${this.resultado} = ${this.digitoUm}`);
     }
 
     private ehUnario(operação: Operação | undefined): boolean {
@@ -101,20 +99,18 @@ export default class CpuB4 implements Cpu {
 
     adicionaDecimal(): void {
         const alvo = this.digitoDois === "" ? "digitoUm" : "digitoDois";
-        if (!this[alvo].includes(".")) {
-            this[alvo] += ".";
-        }
+        if (!this[alvo].includes(".")) {this[alvo] += ".";}
     }
-
 
     controleMemoria(operador: string): void {
         if (operador === "=") {
-            if (this.digitoMemoria) {
+            if (this.leLimpa == false){
                 if (this.digitoDois === "") {//🐎
                     this.digitoUm = this.digitoMemoria;
                 } else {this.digitoDois = this.digitoMemoria;}
                 this.completo = true;
-            }
+                this.leLimpa = true
+            } else {this.digitoMemoria == ""}
         } else {
             const expressao = `${this.digitoMemoria || 0}${operador}${this.digitoUm}`;
             this.digitoMemoria = String(this.converte(expressao));
