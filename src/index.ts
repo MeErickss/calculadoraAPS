@@ -1,56 +1,91 @@
 import CpuB4 from "./cpuGrupoB4";
-import { Digito, Operação, Controle, Sinal} from "./calculadora";
-import TelaB4 from "./telaGrupoB4";
-import TecladoX0 from "./tecladoGrupoB4";
+import { Digito, Operação, Controle, Sinal } from "./calculadora"
+import  TelaB4  from "./telaGrupoB4"
 
-const tela = new TelaB4();
-const cpu = new CpuB4(tela);
-const teclado = new TecladoX0();
-teclado.definaCpu(cpu);
+export interface IDisplay {
+    showNumber(value: number) : void;
+    clear(): void;
+}
 
-document.addEventListener("DOMContentLoaded", () => {
-  const display = document.getElementById("display") as HTMLElement;
+export default class Display implements IDisplay{
+    showNumber(value: number): void{
+        console.log(value);
+    }
 
-  // Função para atualizar o display
-  function atualizarDisplay(valor: string) {
-    display.textContent = valor;
-  }
+    clear(): void {
+        
+    }
+}
 
-  // Adicionar evento aos botões de dígitos
-  document.querySelectorAll(".botao.digito").forEach((botao) => {
-    botao.addEventListener("click", () => {
-      const valor = (botao as HTMLElement).getAttribute("data-digito") as keyof typeof Digito;
-      if (valor !== null) {
-        teclado.digiteDigito(Digito[valor]);
-      }
-    });
-  });
+class MinhaDisplay extends Display{
+    showAlpha(value: string): void {
+        console.log("[a]" + value)
+    }
 
-  // Adicionar evento aos botões de operações
-  document.querySelectorAll(".botao.operacao").forEach((botao) => {
-    botao.addEventListener("click", () => {
-      const operacao = (botao as HTMLElement).getAttribute("data-operacao") as keyof typeof Operação;
-      if (operacao !== null) {
-        teclado.digiteOperacao(Operação[operacao]);
-      }
-    });
-  });
+    // sobrescreve Display.showNumber()
+    override showNumber(value: number): void {
+        console.log("[n]" + value)
+    }
+}
 
-  // Adicionar evento aos botões de controle
-  document.querySelectorAll(".botao.controle").forEach((botao) => {
-    botao.addEventListener("click", () => {
-      const controle = (botao as HTMLElement).getAttribute("data-controle") as keyof typeof Controle;
-      if (controle !== null) {
-        teclado.digiteControle(Controle[controle]);
-      }
-    });
-  });
+// const d = new Display();
+// d.showNumber(123.45);
 
-  // Atualizar a tela da calculadora para exibir o valor correto
-  tela.mostre = (digito) => atualizarDisplay(digito.toString());
-  tela.limpe = () => atualizarDisplay("0");
-  tela.mostreErro = () => atualizarDisplay("Erro");
-  tela.mostreMemoria = () => atualizarDisplay("M");
-  tela.mostreSeparadorDecimal = () => atualizarDisplay(display.textContent + ".");
-  tela.mostreSinal = (sinal) => atualizarDisplay(sinal === Sinal.POSITIVO ? "+" : "-");
-});
+// var d1 = new MinhaDisplay();
+// d1.showNumber(123.45);
+
+// var d2: Display = new MinhaDisplay() // criando objeto tipo Display
+// d2 = d1
+// d1 = d2 as MinhaDisplay; //conversao de tipo com Type Casting
+
+const tela = new TelaB4()
+const cpu = new CpuB4(tela)
+
+
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaOperacao(Operação.SUBTRAÇÃO)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaOperacao(Operação.PERCENTUAL)
+cpu.recebaControle(Controle.IGUAL)
+
+cpu.limpa()
+
+//cpu.recebaDigito(Digito.)
+//cpu.recebaControle(Controle.)
+//cpu.recebaOperacao(Operação.)
+
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaControle(Controle.IGUAL)
+
+cpu.limpa()
+
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.IGUAL)
+
+cpu.limpa()
+
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaControle(Controle.IGUAL)
