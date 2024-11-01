@@ -1,5 +1,5 @@
 //🐎
-import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora"
+import { Controle, Cpu, Digito, Operação, Tela, Sinal } from "./calculadora"
 
 export default class CpuB4 implements Cpu {
     tela: Tela | undefined
@@ -8,6 +8,7 @@ export default class CpuB4 implements Cpu {
     digitoDois = ""
     resultado: string | undefined = ""
     op: Operação | undefined = undefined
+    sinal: Sinal = Sinal.POSITIVO;
     controleDecimal: boolean = false
     leLimpa: boolean = false
     completo: boolean = false
