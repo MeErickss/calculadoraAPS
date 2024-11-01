@@ -1,20 +1,21 @@
-import { Controle, Cpu, Digito, Operação, Teclado } from "./calculadora"
+import { Controle, Cpu, Digito, Operação, Teclado } from "./calculadora";
 
+export default class TecladoX0 implements Teclado {
+  private cpu: Cpu | undefined
 
-export default class TecladoB4 implements Teclado {
-    digiteDigito(digito: Digito): void {
-        throw new Error("Method not implemented.");
-    }
-    digiteOperacao(operação: Operação): void {
-        throw new Error("Method not implemented.");
-    }
-    digiteControle(controle: Controle): void {
-        throw new Error("Method not implemented.");
-    }
-    definaCpu(cpu: Cpu): void {
-        throw new Error("Method not implemented.");
-    }
-    obtenhaCpu(): Cpu {
-        throw new Error("Method not implemented.");
-    }
+  digiteDigito(digito: Digito): void {
+    this.cpu?.recebaDigito(digito)
+  }
+  digiteOperacao(operação: Operação): void {
+    this.cpu?.recebaOperacao(operação)
+  }
+  digiteControle(controle: Controle): void {
+    this.cpu?.recebaControle(controle)
+  }
+  definaCpu(cpu: Cpu | undefined): void {
+    this.cpu = cpu
+  }
+  obtenhaCpu(): Cpu | undefined {
+    return this.cpu
+  }
 }

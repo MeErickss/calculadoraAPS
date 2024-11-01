@@ -65,15 +65,15 @@ export default class CpuB4 implements Cpu {
         switch (controle) {
             case Controle.DESATIVAÇÃO:
             case Controle.ATIVAÇÃO_LIMPEZA_ERRO: this.limpa(); break
-            case Controle.MEMÓRIA_LEITURA_LIMPEZA: this.lerMemoria(); break
-            case Controle.MEMÓRIA_SOMA: this.adicionaMemoria(); break
-            case Controle.MEMÓRIA_SUBTRAÇÃO: this.limpaMemoria(); break
+            case Controle.MEMÓRIA_LEITURA_LIMPEZA: this.controleMemoria("="); break
+            case Controle.MEMÓRIA_SOMA: this.controleMemoria("+"); break
+            case Controle.MEMÓRIA_SUBTRAÇÃO: this.controleMemoria("-"); break
             case Controle.SEPARADOR_DECIMAL: this.adicionaDecimal(); break
             case Controle.IGUAL: this.realizaCalculo(); break
         }
     }
 
-    realizaCalculo(): void { //refatorar (tirar essas porra de if e monte de this, olhar o codigo do professor  )
+    realizaCalculo(): void {
         if (!this.ehUnario(this.op)) {
             this.resultado = String(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`)
             this.digitoUm = String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`))
@@ -100,47 +100,43 @@ export default class CpuB4 implements Cpu {
     }
 
     adicionaDecimal(): void {
-        this.leLimpa = false
-        if (this.digitoDois === "" && !this.digitoUm.includes(".")) {
-            this.digitoUm += "."
-        } else if (!this.digitoDois.includes(".")) {
-            this.digitoDois += "."
+        const alvo = this.digitoDois === "" ? "digitoUm" : "digitoDois";
+        if (!this[alvo].includes(".")) {
+            this[alvo] += ".";
         }
     }
 
-    limpaMemoria(): void {
-        this.leLimpa = false 
-        this.digitoMemoria = ""
-    }
 
-    adicionaMemoria(): void {
-        this.leLimpa = false//🐎
-        this.digitoMemoria = this.digitoUm
-    }
-
-    lerMemoria(): void {
-        if (this.leLimpa == false) {
-            this.digitoDois = this.digitoUm
-            this.digitoUm = this.digitoMemoria
-            this.completo = true
+    controleMemoria(operador: string): void {
+        if (operador === "=") {
+            if (this.digitoMemoria) {
+                if (this.digitoDois === "") {//🐎
+                    this.digitoUm = this.digitoMemoria;
+                } else {this.digitoDois = this.digitoMemoria;}
+                this.completo = true;
+            }
         } else {
-            this.digitoMemoria = ""
-            this.completo = false
+            const expressao = `${this.digitoMemoria || 0}${operador}${this.digitoUm}`;
+            this.digitoMemoria = String(this.converte(expressao));
         }
     }
 
     reinicie(): void {
         this.limpa()
+        this.limpaEstados()
         this.tela ? this.tela.mostre(Digito.ZERO) : null
     }
 
+    limpaEstados(): void {
+        this.leLimpa = false;
+        this.completo = false;
+    }
+    
     limpa(): void {
-        this.digitoUm = ""
-        this.digitoDois = ""
-        this.op = undefined
-        this.digitoMemoria = ""
-        this.completo = false
-        this.leLimpa = false 
+        this.digitoUm = "";
+        this.digitoDois = "";
+        this.op = undefined;
+        this.digitoMemoria = "";
     }
 
     definaTela(tela: Tela | undefined): void {
