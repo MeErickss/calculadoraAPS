@@ -16,12 +16,19 @@ export default class CpuB4 implements Cpu {
         this.definaTela(tela)
     }
 
+    limpa(): void {
+        this.digitoUm = "";
+        this.digitoDois = "";
+        this.op = undefined;
+        this.digitoMemoria = "";
+    }
+
     opToString(operação: Operação): string {
         switch (operação) {
             case Operação.SOMA: return "+"
             case Operação.SUBTRAÇÃO: return "-"//🐎
             case Operação.DIVISÃO: return "/"
-            case Operação.PERCENTUAL: return "*0.01"
+            case Operação.PERCENTUAL: return "*0.01" 
             case Operação.MULTIPLICAÇÃO: return "*"
             case Operação.RAIZ_QUADRADA: return "**0.5"
             default: return ""
@@ -79,7 +86,9 @@ export default class CpuB4 implements Cpu {
         } else if (this.op === Operação.RAIZ_QUADRADA) {
             return String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`));
         } else {
-            return String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.MULTIPLICAÇÃO)}${this.digitoDois}`));
+            const percentual = this.converte(this.digitoDois) * 0.01;
+            const resultado = this.converte(this.digitoUm) + percentual * this.converte(this.digitoUm);
+            return String(resultado);
         }
     }
     
@@ -126,13 +135,6 @@ export default class CpuB4 implements Cpu {
     limpaEstados(): void {
         this.leLimpa = false;
         this.completo = false;
-    }
-    
-    limpa(): void {
-        this.digitoUm = "";
-        this.digitoDois = "";
-        this.op = undefined;
-        this.digitoMemoria = "";
     }
 
     definaTela(tela: Tela | undefined): void {

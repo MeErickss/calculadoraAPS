@@ -22,42 +22,30 @@ class MinhaDisplay extends Display{
         console.log("[a]" + value)
     }
 
-    // sobrescreve Display.showNumber()
     override showNumber(value: number): void {
         console.log("[n]" + value)
     }
 }
 
-// const d = new Display();
-// d.showNumber(123.45);
-
-// var d1 = new MinhaDisplay();
-// d1.showNumber(123.45);
-
-// var d2: Display = new MinhaDisplay() // criando objeto tipo Display
-// d2 = d1
-// d1 = d2 as MinhaDisplay; //conversao de tipo com Type Casting
-
 const tela = new TelaB4()
 const cpu = new CpuB4(tela)
-
-
-cpu.recebaDigito(Digito.UM)
-cpu.recebaDigito(Digito.ZERO)
-cpu.recebaDigito(Digito.ZERO)
-cpu.recebaOperacao(Operação.SUBTRAÇÃO)
-cpu.recebaDigito(Digito.UM)
-cpu.recebaDigito(Digito.ZERO)
-cpu.recebaOperacao(Operação.PERCENTUAL)
-cpu.recebaControle(Controle.IGUAL)
-
-cpu.limpa()
 
 //cpu.recebaDigito(Digito.)
 //cpu.recebaControle(Controle.)
 //cpu.recebaOperacao(Operação.)
 
 cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaOperacao(Operação.PERCENTUAL)
+cpu.recebaControle(Controle.IGUAL)
+
+//cpu.limpa()
+
+cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
 cpu.recebaDigito(Digito.TRÊS)
 cpu.recebaControle(Controle.MEMÓRIA_SOMA)
@@ -66,7 +54,8 @@ cpu.recebaDigito(Digito.UM)
 cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 cpu.recebaControle(Controle.IGUAL)
 
-cpu.limpa()
+//cpu.limpa()
+
 
 cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
@@ -78,7 +67,8 @@ cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 cpu.recebaDigito(Digito.UM)
 cpu.recebaControle(Controle.IGUAL)
 
-cpu.limpa()
+//cpu.limpa()
+
 
 cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
