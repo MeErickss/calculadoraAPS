@@ -22,7 +22,7 @@ export default class TelaB4 implements Tela {
           console.log("  1 \n  1 \n  1 \n  1 \n1111\n");
           break;
         case Digito.DOIS:
-          console.log("2222\n   2\n2222\n   2\n2222\n");
+          console.log("222222\n     2\n   2\n 2\n2\n222222\n");
           break;
         case Digito.TRÊS:
           console.log("3333\n   3\n 333\n   3\n3333\n");
@@ -43,7 +43,7 @@ export default class TelaB4 implements Tela {
           console.log("8888\n8  8\n8888\n8  8\n8888\n");
           break;
         case Digito.NOVE:
-          console.log("9999\n9  9\n9999\n   9\n9999\n");
+          console.log("9999\n9    9\n9999\n     9\n     9\n9999\n");
           break;
         default:
           console.log("Dígito inválido:"+digito);
