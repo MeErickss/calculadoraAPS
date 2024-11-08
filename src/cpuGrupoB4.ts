@@ -7,7 +7,7 @@ export default class CpuB4 implements Cpu {
     private digitoUm = ""
     private digitoDois = ""
     private resultado: string | undefined = ""
-    private op: Operação | undefined = undefined// sinal usar string.charat() ou string.lastindexof()
+    private op: Operação | undefined = undefined
     private leLimpa: boolean = false
     private completo: boolean = false
 
