@@ -1,5 +1,5 @@
 //🐎
-import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora"
+import { Controle, Cpu, Digito, Operação, Tela, Sinal } from "./calculadora"
 
 export default class CpuB4 implements Cpu {
     tela: Tela | undefined
@@ -7,7 +7,7 @@ export default class CpuB4 implements Cpu {
     digitoUm = ""
     digitoDois = ""
     resultado: string | undefined = ""
-    op: Operação | undefined = undefined
+    op: Operação | undefined = undefined// sinal usar string.charat() ou string.lastindexof()
     controleDecimal: boolean = false
     leLimpa: boolean = false
     completo: boolean = false
@@ -31,7 +31,6 @@ export default class CpuB4 implements Cpu {
             case Operação.PERCENTUAL: return "*0.01" 
             case Operação.MULTIPLICAÇÃO: return "*"
             case Operação.RAIZ_QUADRADA: return "**0.5"
-            default: return ""
         }
     }
 
@@ -47,12 +46,15 @@ export default class CpuB4 implements Cpu {
 
     recebaDigito(digito: Digito): void {
         this.leLimpa = false//🐎
-        if (this.completo == true) { this.digitoDois = ""; this.completo = false }
+        if (this.completo == true) { this.limpa(); this.completo = false }
         if (this.digitoDois === "" && this.op === undefined) {
+            if (!this.digitoUm.length){this.tela?.limpe()}
             this.digitoUm += digito
         } else {
+            if (!this.digitoDois.length){this.tela?.limpe()}
             this.digitoDois += digito
         }
+        this.tela?.mostre(digito)
     }
 
     recebaOperacao(operação: Operação): void {
@@ -92,14 +94,15 @@ export default class CpuB4 implements Cpu {
         }
     }
     
-    finalizarCalculo(): void {
+    finalizarCalculo(): void { 
         this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
         this.digitoUm = this.calcularResultado();
-        this.digitoDois = "";
-        this.op = undefined;
         this.completo = true;
     
         console.log(`${this.resultado} = ${this.digitoUm}`);
+        this.tela?.limpe()
+        this.tela?.mostreSinal(this.digitoUm.charAt(0) == "-"? Sinal.NEGATIVO : Sinal.POSITIVO)
+        this.tela?.mostre(this.converte(this.digitoUm))
     }
 
     private ehUnario(operação: Operação | undefined): boolean {
@@ -120,7 +123,7 @@ export default class CpuB4 implements Cpu {
                 this.completo = true;
                 this.leLimpa = true
             } else {this.digitoMemoria == ""}
-        } else {
+        } else if (operador === "-"){this.digitoMemoria = ""}else {
             const expressao = `${this.digitoMemoria || 0}${operador}${this.digitoUm}`;
             this.digitoMemoria = String(this.converte(expressao));
         }
@@ -128,13 +131,9 @@ export default class CpuB4 implements Cpu {
 
     reinicie(): void {
         this.limpa()
-        this.limpaEstados()
-        this.tela ? this.tela.mostre(Digito.ZERO) : null
-    }
-
-    limpaEstados(): void {
         this.leLimpa = false;
         this.completo = false;
+        this.tela ? this.tela.mostre(Digito.ZERO) : null
     }
 
     definaTela(tela: Tela | undefined): void {
