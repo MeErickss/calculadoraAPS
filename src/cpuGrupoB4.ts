@@ -10,6 +10,7 @@ export default class CpuB4 implements Cpu {
     private op: Operação | undefined = undefined
     private leLimpa: boolean = false
     private completo: boolean = false
+    
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -33,7 +34,23 @@ export default class CpuB4 implements Cpu {
         }
     }
 
-    private converte = (expressao: string): number => {
+    private mostreDigitos(digito: Digito[],sinal: Sinal):void{
+        this.tela?.limpe()
+        this.tela?.mostreSinal(sinal)
+        digito.forEach((element) => this.tela?.mostre(element))
+    }
+
+    private converteSringDigitos(string :string): Digito[]{
+        let resultado: Digito[] = []
+        for (let i of string){
+            if (i!="-" && "."){
+                resultado.push(Number(i))
+            }
+        }
+        return resultado
+    }
+
+    private resolva = (expressao: string): number => {
         try {
             const func = new Function('return ' + expressao)
             return func()
@@ -53,7 +70,6 @@ export default class CpuB4 implements Cpu {
             if (!this.digitoDois.length){this.tela?.limpe()}
             this.digitoDois += digito
         }
-        this.tela?.mostre(digito)
     }
 
     recebaOperacao(operação: Operação): void {
@@ -83,12 +99,12 @@ export default class CpuB4 implements Cpu {
 
     private calcularResultado(): string {
         if (!this.ehUnario(this.op)) {
-            return String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
+            return String(this.resolva(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
         } else if (this.op === Operação.RAIZ_QUADRADA) {
-            return String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`));
+            return String(this.resolva(`${this.digitoUm}${this.opToString(this.op)}`));
         } else {
-            const percentual = this.converte(this.digitoDois) * 0.01;
-            const resultado = this.converte(this.digitoUm) + percentual * this.converte(this.digitoUm);
+            const percentual = this.resolva(this.digitoDois) * 0.01;
+            const resultado = this.resolva(this.digitoUm) + percentual * this.resolva(this.digitoUm);
             return String(resultado);
         }
     }
@@ -98,10 +114,7 @@ export default class CpuB4 implements Cpu {
         this.digitoUm = this.calcularResultado();
         this.completo = true;
     
-        console.log(`${this.resultado} = ${this.digitoUm}`);
-        this.tela?.limpe()
-        this.tela?.mostreSinal(this.digitoUm.lastIndexOf("-") == -1 ? Sinal.POSITIVO : Sinal.NEGATIVO)
-        this.tela?.mostre(this.converte(this.digitoUm))
+        this.mostreDigitos(this.converteSringDigitos(this.digitoUm), (this.digitoUm.lastIndexOf("-") == -1 ? Sinal.POSITIVO : Sinal.NEGATIVO))
     }
 
     private ehUnario(operação: Operação | undefined): boolean {
@@ -121,10 +134,11 @@ export default class CpuB4 implements Cpu {
                 } else {this.digitoDois = this.digitoMemoria;}
                 this.completo = true;
                 this.leLimpa = true
+                this.tela?.mostreMemoria()
             } else {this.digitoMemoria == ""}
         } else if (operador === "-"){this.digitoMemoria = ""}else {
             const expressao = `${this.digitoMemoria || 0}${operador}${this.digitoUm}`;
-            this.digitoMemoria = String(this.converte(expressao));
+            this.digitoMemoria = String(this.resolva(expressao));
         }
     }
 

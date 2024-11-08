@@ -8,7 +8,7 @@ export default class TelaB4 implements Tela {
         console.log("..\n..\n");
     }
     mostreSinal(sinal: Sinal): void {
-      if (sinal === Sinal.NEGATIVO) "-----\n";
+      if (sinal == 1){ console.log("-----\n");}
     }
     mostreErro(): void {
       console.log("EEEE\nE   \nEE  \nE   \nEEEE\n");
@@ -46,7 +46,7 @@ export default class TelaB4 implements Tela {
           console.log("9999\n9  9\n9999\n   9\n9999\n");
           break;
         default:
-          console.log("Dígito inválido");
+          console.log("Dígito inválido:"+digito);
       }
     }
     limpe(): void {

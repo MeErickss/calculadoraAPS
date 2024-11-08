@@ -1,6 +1,6 @@
 import CpuB4 from "./cpuGrupoB4";
 import { Digito, Operação, Controle, Sinal } from "./calculadora"
-import  TelaB4  from "./telaGrupoB4a"
+import  TelaB4  from "./telaGrupoB4"
 
 export interface IDisplay {
     showNumber(value: number) : void;
@@ -33,7 +33,6 @@ const cpu = new CpuB4(tela)
 //cpu.recebaDigito(Digito.)
 //cpu.recebaControle(Controle.)
 //cpu.recebaOperacao(Operação.)
-
 
 
 cpu.recebaDigito(Digito.UM)
@@ -79,8 +78,7 @@ cpu.recebaControle(Controle.IGUAL)
 
 
 cpu.recebaDigito(Digito.UM)
+cpu.recebaOperacao(Operação.SUBTRAÇÃO)
 cpu.recebaDigito(Digito.DOIS)
-cpu.recebaDigito(Digito.TRÊS)
-cpu.recebaOperacao(Operação.SOMA)
-cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.DOIS)
 cpu.recebaControle(Controle.IGUAL)
