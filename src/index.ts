@@ -1,7 +1,6 @@
 import CpuB4 from "./cpuGrupoB4";
 import { Digito, Operação, Controle, Sinal } from "./calculadora"
 import  TelaB4  from "./telaGrupoB4"
-import { TestadorTela, TestadorCpu } from "./testeCalculadora"
 
 export interface IDisplay {
     showNumber(value: number) : void;
@@ -35,57 +34,48 @@ const cpu = new CpuB4(tela)
 //cpu.recebaControle(Controle.)
 //cpu.recebaOperacao(Operação.)
 
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.ZERO)
+cpu.recebaOperacao(Operação.PERCENTUAL)
+cpu.recebaControle(Controle.IGUAL)
 
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaDigito(Digito.ZERO)
-//cpu.recebaDigito(Digito.ZERO)
-//cpu.recebaOperacao(Operação.SOMA)
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaDigito(Digito.ZERO)
-//cpu.recebaOperacao(Operação.PERCENTUAL)
-//cpu.recebaControle(Controle.IGUAL)
-//
-//
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaDigito(Digito.DOIS)
-//cpu.recebaDigito(Digito.TRÊS)
-//cpu.recebaControle(Controle.MEMÓRIA_SOMA)
-//cpu.recebaOperacao(Operação.SOMA)
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
-//cpu.recebaControle(Controle.IGUAL)
-//
-//
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaDigito(Digito.DOIS)
-//cpu.recebaDigito(Digito.TRÊS)
-//cpu.recebaControle(Controle.MEMÓRIA_SOMA)
-//cpu.recebaOperacao(Operação.SOMA)
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaControle(Controle.IGUAL)
-//
-//
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaDigito(Digito.DOIS)
-//cpu.recebaDigito(Digito.TRÊS)
-//cpu.recebaControle(Controle.MEMÓRIA_SOMA)
-//cpu.recebaOperacao(Operação.SOMA)
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
-//cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
-//cpu.recebaControle(Controle.IGUAL)
+//cpu.limpa()
 
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaOperacao(Operação.SOMA)
-//cpu.recebaDigito(Digito.UM)
-//cpu.recebaDigito(Digito.ZERO)
-//cpu.recebaControle(Controle.IGUAL)
-const testeTela = new TestadorTela(tela)
-const testeCpu = new TestadorCpu(cpu)
-testeTela.testeTodosNúmeros()
-testeTela.testeTodosSímbolo()
-//testeCpu.teste123Soma456()
-//testeCpu.teste12Divisão10()
-//testeCpu.teste12Soma34Soma56()
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaControle(Controle.IGUAL)
+
+//cpu.limpa()
+
+
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.IGUAL)
+
+//cpu.limpa()
+
+
+cpu.recebaDigito(Digito.UM)
+cpu.recebaDigito(Digito.DOIS)
+cpu.recebaDigito(Digito.TRÊS)
+cpu.recebaControle(Controle.MEMÓRIA_SOMA)
+cpu.recebaOperacao(Operação.SOMA)
+cpu.recebaDigito(Digito.UM)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
+cpu.recebaControle(Controle.IGUAL)

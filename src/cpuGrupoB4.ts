@@ -1,16 +1,16 @@
 //🐎
-import { Controle, Cpu, Digito, Operação, Tela, Sinal } from "./calculadora"
+import { Controle, Cpu, Digito, Operação, Tela } from "./calculadora"
 
 export default class CpuB4 implements Cpu {
     tela: Tela | undefined
-    private digitoMemoria = ""
-    private digitoUm = ""
-    private digitoDois = ""
-    private resultado: string | undefined = ""
-    private op: Operação | undefined = undefined
-    private leLimpa: boolean = false
-    private completo: boolean = false
-    
+    digitoMemoria = ""
+    digitoUm = ""
+    digitoDois = ""
+    resultado: string | undefined = ""
+    op: Operação | undefined = undefined
+    controleDecimal: boolean = false
+    leLimpa: boolean = false
+    completo: boolean = false
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -23,7 +23,7 @@ export default class CpuB4 implements Cpu {
         this.digitoMemoria = "";
     }
 
-    private opToString(operação: Operação): string {
+    opToString(operação: Operação): string {
         switch (operação) {
             case Operação.SOMA: return "+"
             case Operação.SUBTRAÇÃO: return "-"//🐎
@@ -31,26 +31,11 @@ export default class CpuB4 implements Cpu {
             case Operação.PERCENTUAL: return "*0.01" 
             case Operação.MULTIPLICAÇÃO: return "*"
             case Operação.RAIZ_QUADRADA: return "**0.5"
+            default: return ""
         }
     }
 
-    private mostreDigitos(digito: Digito[],sinal: Sinal):void{
-        this.tela?.limpe()
-        this.tela?.mostreSinal(sinal)
-        digito.forEach((element) => this.tela?.mostre(element))
-    }
-
-    private converteSringDigitos(string :string): Digito[]{
-        let resultado: Digito[] = []
-        for (let i of string){
-            if (i!="-" && "."){
-                resultado.push(Number(i))
-            }
-        }
-        return resultado
-    }
-
-    private resolva = (expressao: string): number => {
+    converte = (expressao: string): number => {
         try {
             const func = new Function('return ' + expressao)
             return func()
@@ -62,12 +47,10 @@ export default class CpuB4 implements Cpu {
 
     recebaDigito(digito: Digito): void {
         this.leLimpa = false//🐎
-        if (this.completo == true) { this.limpa(); this.completo = false }
+        if (this.completo == true) { this.digitoDois = ""; this.completo = false }
         if (this.digitoDois === "" && this.op === undefined) {
-            if (!this.digitoUm.length){this.tela?.limpe()}
             this.digitoUm += digito
         } else {
-            if (!this.digitoDois.length){this.tela?.limpe()}
             this.digitoDois += digito
         }
     }
@@ -97,36 +80,38 @@ export default class CpuB4 implements Cpu {
         }
     }
 
-    private calcularResultado(): string {
+    calcularResultado(): string {
         if (!this.ehUnario(this.op)) {
-            return String(this.resolva(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
+            return String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
         } else if (this.op === Operação.RAIZ_QUADRADA) {
-            return String(this.resolva(`${this.digitoUm}${this.opToString(this.op)}`));
+            return String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`));
         } else {
-            const percentual = this.resolva(this.digitoDois) * 0.01;
-            const resultado = this.resolva(this.digitoUm) + percentual * this.resolva(this.digitoUm);
+            const percentual = this.converte(this.digitoDois) * 0.01;
+            const resultado = this.converte(this.digitoUm) + percentual * this.converte(this.digitoUm);
             return String(resultado);
         }
     }
     
-    private finalizarCalculo(): void { 
+    finalizarCalculo(): void {
         this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
         this.digitoUm = this.calcularResultado();
+        this.digitoDois = "";
+        this.op = undefined;
         this.completo = true;
     
-        this.mostreDigitos(this.converteSringDigitos(this.digitoUm), (this.digitoUm.lastIndexOf("-") == -1 ? Sinal.POSITIVO : Sinal.NEGATIVO))
+        console.log(`${this.resultado} = ${this.digitoUm}`);
     }
 
     private ehUnario(operação: Operação | undefined): boolean {
         return operação === Operação.RAIZ_QUADRADA || operação === Operação.PERCENTUAL
     }
 
-    private adicionaDecimal(): void {
+    adicionaDecimal(): void {
         const alvo = this.digitoDois === "" ? "digitoUm" : "digitoDois";
         if (!this[alvo].includes(".")) {this[alvo] += ".";}
     }
 
-    private controleMemoria(operador: string): void {
+    controleMemoria(operador: string): void {
         if (operador === "=") {
             if (this.leLimpa == false){
                 if (this.digitoDois === "") {//🐎
@@ -134,19 +119,22 @@ export default class CpuB4 implements Cpu {
                 } else {this.digitoDois = this.digitoMemoria;}
                 this.completo = true;
                 this.leLimpa = true
-                this.tela?.mostreMemoria()
             } else {this.digitoMemoria == ""}
-        } else if (operador === "-"){this.digitoMemoria = ""}else {
+        } else {
             const expressao = `${this.digitoMemoria || 0}${operador}${this.digitoUm}`;
-            this.digitoMemoria = String(this.resolva(expressao));
+            this.digitoMemoria = String(this.converte(expressao));
         }
     }
 
     reinicie(): void {
         this.limpa()
+        this.limpaEstados()
+        this.tela ? this.tela.mostre(Digito.ZERO) : null
+    }
+
+    limpaEstados(): void {
         this.leLimpa = false;
         this.completo = false;
-        this.tela ? this.tela.mostre(Digito.ZERO) : null
     }
 
     definaTela(tela: Tela | undefined): void {
