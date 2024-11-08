@@ -15,6 +15,28 @@ export class TestadorTela {
     });
   }
 
+  //testeTodosNúmeros() {
+  //  this.tela.limpe();
+  //  console.log("= Testando todos os dígitos ===========================");
+  //  const digitos: Digito[] = [
+  //    Digito.ZERO,
+  //    Digito.UM,
+  //    Digito.DOIS,
+  //    Digito.TRÊS,
+  //    Digito.QUATRO,
+  //    Digito.CINCO,
+  //    Digito.SEIS,
+  //    Digito.SETE,
+  //    Digito.OITO,
+  //    Digito.NOVE,
+  //  ];
+//
+  //  digitos.forEach((digito) => {
+  //    this.tela.mostre(digito);
+  //    console.log("--------------");
+  //  });
+  //}
+
   testeTodosSímbolo() {
     this.tela.limpe();
     console.log("= Testando todos os símbolos ===========================");

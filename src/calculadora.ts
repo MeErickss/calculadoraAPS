@@ -39,6 +39,7 @@ export interface Tela {
   mostre(digito: Digito): void;
   mostreSeparadorDecimal(): void;
   mostreSinal(sinal: Sinal): void;
+  mostreOperação(operação: Operação): void;
   mostreMemoria(): void;
   mostreErro(): void;
   limpe(): void;
