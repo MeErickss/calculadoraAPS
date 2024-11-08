@@ -3,14 +3,13 @@ import { Controle, Cpu, Digito, Operação, Tela, Sinal } from "./calculadora"
 
 export default class CpuB4 implements Cpu {
     tela: Tela | undefined
-    digitoMemoria = ""
-    digitoUm = ""
-    digitoDois = ""
-    resultado: string | undefined = ""
-    op: Operação | undefined = undefined// sinal usar string.charat() ou string.lastindexof()
-    controleDecimal: boolean = false
-    leLimpa: boolean = false
-    completo: boolean = false
+    private digitoMemoria = ""
+    private digitoUm = ""
+    private digitoDois = ""
+    private resultado: string | undefined = ""
+    private op: Operação | undefined = undefined// sinal usar string.charat() ou string.lastindexof()
+    private leLimpa: boolean = false
+    private completo: boolean = false
 
     constructor(tela: Tela) {
         this.definaTela(tela)
@@ -23,7 +22,7 @@ export default class CpuB4 implements Cpu {
         this.digitoMemoria = "";
     }
 
-    opToString(operação: Operação): string {
+    private opToString(operação: Operação): string {
         switch (operação) {
             case Operação.SOMA: return "+"
             case Operação.SUBTRAÇÃO: return "-"//🐎
@@ -34,7 +33,7 @@ export default class CpuB4 implements Cpu {
         }
     }
 
-    converte = (expressao: string): number => {
+    private converte = (expressao: string): number => {
         try {
             const func = new Function('return ' + expressao)
             return func()
@@ -82,7 +81,7 @@ export default class CpuB4 implements Cpu {
         }
     }
 
-    calcularResultado(): string {
+    private calcularResultado(): string {
         if (!this.ehUnario(this.op)) {
             return String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
         } else if (this.op === Operação.RAIZ_QUADRADA) {
@@ -94,14 +93,14 @@ export default class CpuB4 implements Cpu {
         }
     }
     
-    finalizarCalculo(): void { 
+    private finalizarCalculo(): void { 
         this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
         this.digitoUm = this.calcularResultado();
         this.completo = true;
     
         console.log(`${this.resultado} = ${this.digitoUm}`);
         this.tela?.limpe()
-        this.tela?.mostreSinal(this.digitoUm.charAt(0) == "-"? Sinal.NEGATIVO : Sinal.POSITIVO)
+        this.tela?.mostreSinal(this.digitoUm.lastIndexOf("-") == -1 ? Sinal.POSITIVO : Sinal.NEGATIVO)
         this.tela?.mostre(this.converte(this.digitoUm))
     }
 
@@ -109,12 +108,12 @@ export default class CpuB4 implements Cpu {
         return operação === Operação.RAIZ_QUADRADA || operação === Operação.PERCENTUAL
     }
 
-    adicionaDecimal(): void {
+    private adicionaDecimal(): void {
         const alvo = this.digitoDois === "" ? "digitoUm" : "digitoDois";
         if (!this[alvo].includes(".")) {this[alvo] += ".";}
     }
 
-    controleMemoria(operador: string): void {
+    private controleMemoria(operador: string): void {
         if (operador === "=") {
             if (this.leLimpa == false){
                 if (this.digitoDois === "") {//🐎

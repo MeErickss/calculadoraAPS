@@ -45,7 +45,6 @@ cpu.recebaDigito(Digito.ZERO)
 cpu.recebaOperacao(Operação.PERCENTUAL)
 cpu.recebaControle(Controle.IGUAL)
 
-//cpu.limpa()
 
 cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
@@ -56,7 +55,6 @@ cpu.recebaDigito(Digito.UM)
 cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 cpu.recebaControle(Controle.IGUAL)
 
-//cpu.limpa()
 
 cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
@@ -68,7 +66,6 @@ cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 cpu.recebaDigito(Digito.UM)
 cpu.recebaControle(Controle.IGUAL)
 
-//cpu.limpa()
 
 cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
@@ -79,6 +76,7 @@ cpu.recebaDigito(Digito.UM)
 cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 cpu.recebaControle(Controle.MEMÓRIA_LEITURA_LIMPEZA)
 cpu.recebaControle(Controle.IGUAL)
+
 
 cpu.recebaDigito(Digito.UM)
 cpu.recebaDigito(Digito.DOIS)
