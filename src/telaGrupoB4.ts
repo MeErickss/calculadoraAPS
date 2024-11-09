@@ -22,7 +22,7 @@ export default class TelaB4 implements Tela {
           console.log("  1 \n  1 \n  1 \n  1 \n1111\n");
           break;
         case Digito.DOIS:
-          console.log("2222\n   2\n2222\n   2\n2222\n");
+          console.log("2222\n   2\n  2\n 2 \n2\n2222\n");
           break;
         case Digito.TRÊS:
           console.log("3333\n   3\n 333\n   3\n3333\n");

@@ -7,8 +7,8 @@ export default class CpuB4 implements Cpu {
     digitoUm = ""
     digitoDois = ""
     resultado: string | undefined = ""
-    op: Operação | undefined = undefined// sinal usar string.charat() ou string.lastindexof()
-    controleDecimal: boolean = false
+    op: Operação | undefined = undefined
+    controleDecimal: boolean = false//🐎
     leLimpa: boolean = false
     completo: boolean = false
 
@@ -16,6 +16,24 @@ export default class CpuB4 implements Cpu {
         this.definaTela(tela)
     }
 
+    private mostreDigitos(digito: Digito[], sinal: Sinal):void{
+        this.tela?.limpe()
+        this.tela?.mostreSinal(sinal)
+        digito.forEach((element) => {
+            if (String(element) == "NaN"){this.tela?.mostreSeparadorDecimal()} else {this.tela?.mostre(element)}
+        })
+    }
+
+    private converteSringDigitos(string :string): Digito[]{
+        let resultado: Digito[] = []
+        for (let i of string){
+            if (i!="-"){
+                resultado.push(Number(i))
+            }
+        }
+        return resultado
+    }
+//🐎
     limpa(): void {
         this.digitoUm = "";
         this.digitoDois = "";
@@ -34,7 +52,7 @@ export default class CpuB4 implements Cpu {
         }
     }
 
-    converte = (expressao: string): number => {
+    private resolva = (expressao: string): number => {
         try {
             const func = new Function('return ' + expressao)
             return func()
@@ -54,7 +72,6 @@ export default class CpuB4 implements Cpu {
             if (!this.digitoDois.length){this.tela?.limpe()}
             this.digitoDois += digito
         }
-        this.tela?.mostre(digito)
     }
 
     recebaOperacao(operação: Operação): void {
@@ -70,7 +87,7 @@ export default class CpuB4 implements Cpu {
     }
 
     recebaControle(controle: Controle): void {
-        this.leLimpa = false
+        this.leLimpa = false//🐎
         switch (controle) {
             case Controle.DESATIVAÇÃO:
             case Controle.ATIVAÇÃO_LIMPEZA_ERRO: this.limpa(); break
@@ -84,12 +101,12 @@ export default class CpuB4 implements Cpu {
 
     calcularResultado(): string {
         if (!this.ehUnario(this.op)) {
-            return String(this.converte(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
+            return String(this.resolva(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
         } else if (this.op === Operação.RAIZ_QUADRADA) {
-            return String(this.converte(`${this.digitoUm}${this.opToString(this.op)}`));
+            return String(this.resolva(`${this.digitoUm}${this.opToString(this.op)}`));
         } else {
-            const percentual = this.converte(this.digitoDois) * 0.01;
-            const resultado = this.converte(this.digitoUm) + percentual * this.converte(this.digitoUm);
+            const percentual = this.resolva(this.digitoDois) * 0.01;
+            const resultado = this.resolva(this.digitoUm) + percentual * this.resolva(this.digitoUm);
             return String(resultado);
         }
     }
@@ -97,12 +114,9 @@ export default class CpuB4 implements Cpu {
     finalizarCalculo(): void { 
         this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
         this.digitoUm = this.calcularResultado();
-        this.completo = true;
+        this.completo = true;//🐎
     
-        console.log(`${this.resultado} = ${this.digitoUm}`);
-        this.tela?.limpe()
-        this.tela?.mostreSinal(this.digitoUm.charAt(0) == "-"? Sinal.NEGATIVO : Sinal.POSITIVO)
-        this.tela?.mostre(this.converte(this.digitoUm))
+        this.mostreDigitos(this.converteSringDigitos(this.digitoUm), this.digitoUm.lastIndexOf("-") == -1 ? Sinal.POSITIVO : Sinal.NEGATIVO)
     }
 
     private ehUnario(operação: Operação | undefined): boolean {
@@ -125,12 +139,12 @@ export default class CpuB4 implements Cpu {
             } else {this.digitoMemoria == ""}
         } else if (operador === "-"){this.digitoMemoria = ""}else {
             const expressao = `${this.digitoMemoria || 0}${operador}${this.digitoUm}`;
-            this.digitoMemoria = String(this.converte(expressao));
+            this.digitoMemoria = String(this.resolva(expressao));
         }
     }
 
     reinicie(): void {
-        this.limpa()
+        this.limpa()//🐎
         this.leLimpa = false;
         this.completo = false;
         this.tela ? this.tela.mostre(Digito.ZERO) : null
