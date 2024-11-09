@@ -20,7 +20,7 @@ export default class CpuB4 implements Cpu {
         this.tela?.limpe()
         this.tela?.mostreSinal(sinal)
         digito.forEach((element) => {
-            if (String(element) == "NaN"){this.tela?.mostreSeparadorDecimal()} else {this.tela?.mostre(element)}
+            if (String(element) == "NaN"){this.tela?.mostreSeparadorDecimal()} else {this.tela?.mostre(element);}
         })
     }
 
@@ -75,16 +75,22 @@ export default class CpuB4 implements Cpu {
     }
 
     recebaOperacao(operação: Operação): void {
-        this.leLimpa = false
-        if (!this.ehUnario(this.op)) {
-            if (this.digitoUm !== "" && this.digitoDois !== "") {
-                this.calcularResultado()
+        this.leLimpa = false;
+    
+        if (operação === Operação.PERCENTUAL) {this.calcularResultado();} else if (operação === Operação.RAIZ_QUADRADA) {
+            if (this.digitoUm !== "") {
+                this.digitoUm = String((Number(this.digitoUm)**0.5));
+                this.mostreDigitos(this.converteSringDigitos(this.digitoUm), this.digitoUm.lastIndexOf("-") == -1 ? Sinal.POSITIVO : Sinal.NEGATIVO);
             }
-        } else if (this.digitoUm !== "") {
-            this.calcularResultado()
+        } else {
+            if (this.digitoUm !== "" && this.digitoDois !== "") {
+                this.digitoUm = this.calcularResultado();
+                this.digitoDois = "";
+            }
+            this.op = operação;
         }
-        this.op = operação
     }
+    
 
     recebaControle(controle: Controle): void {
         this.leLimpa = false//🐎
@@ -112,11 +118,13 @@ export default class CpuB4 implements Cpu {
     }
     
     finalizarCalculo(): void { 
-        this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
-        this.digitoUm = this.calcularResultado();
-        this.completo = true;//🐎
+        if (this.digitoUm !== "" && this.digitoDois !== "") {
+            this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
+            this.digitoUm = this.calcularResultado();
+            this.completo = true;
     
-        this.mostreDigitos(this.converteSringDigitos(this.digitoUm), this.digitoUm.lastIndexOf("-") == -1 ? Sinal.POSITIVO : Sinal.NEGATIVO)
+            this.mostreDigitos(this.converteSringDigitos(this.digitoUm), this.digitoUm.startsWith("-") ? Sinal.NEGATIVO : Sinal.POSITIVO);
+        }
     }
 
     private ehUnario(operação: Operação | undefined): boolean {
