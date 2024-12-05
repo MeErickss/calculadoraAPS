@@ -1,5 +1,7 @@
 import { Controle, Cpu, Digito, Operação, Sinal, Tela } from "./calculadora";
 
+import TelaX0Teste from "./telaX0Teste";
+
 export class TestadorTela {
   private tela: Tela;
 
@@ -30,9 +32,46 @@ export class TestadorTela {
 
 export class TestadorCpu {
   private cpu: Cpu;
+  private tela: TelaX0Teste = new TelaX0Teste();
+  private reinicieEntreTestes: boolean = true;
 
-  constructor(cpu: Cpu) {
+  constructor(
+    cpu: Cpu,
+    debug: boolean = false,
+    reinicieEntreTestes: boolean = true
+  ) {
     this.cpu = cpu;
+    this.cpu.definaTela(this.tela);
+    this.tela.debug = debug;
+    this.reinicieEntreTestes = reinicieEntreTestes;
+  }
+
+  executeTodosTestes(): void {
+    if (this.reinicieEntreTestes) this.cpu.reinicie();
+    this.teste123Soma456();
+    if (this.reinicieEntreTestes) this.cpu.reinicie();
+    this.teste12Divisão10();
+    if (this.reinicieEntreTestes) this.cpu.reinicie();
+    this.teste12Soma34Soma56();
+  }
+
+  private assert(
+    esperado: string,
+    sinal: Sinal,
+    memoria: boolean,
+    erro: boolean
+  ) {
+    const resultado: string = this.tela.digitos;
+    if (resultado == esperado) console.log("OK");
+    else console.log("ERROR: esperado=" + esperado + " resultado=" + resultado);
+    if (this.tela.sinal != sinal)
+      console.log("ERROR: sinal=" + sinal + " resultado=" + this.tela.sinal);
+    if (this.tela.memoria != memoria)
+      console.log(
+        "ERROR: memoria=" + memoria + " resultado=" + this.tela.memoria
+      );
+    if (this.tela.error != erro)
+      console.log("ERROR: erro=" + erro + " resultado=" + this.tela.error);
   }
 
   teste123Soma456() {
@@ -45,6 +84,8 @@ export class TestadorCpu {
       this.cpu.recebaDigito(element);
     });
     this.cpu.recebaControle(Controle.IGUAL);
+    console.log("= Testando 123 + 456 ===========================");
+    this.assert("579", Sinal.POSITIVO, false, false);
   }
 
   teste12Soma34Soma56() {
@@ -61,6 +102,7 @@ export class TestadorCpu {
       this.cpu.recebaDigito(element);
     });
     this.cpu.recebaControle(Controle.IGUAL);
+    this.assert("102", Sinal.POSITIVO, false, false);
   }
 
   teste12Divisão10() {
@@ -73,5 +115,6 @@ export class TestadorCpu {
       this.cpu.recebaDigito(element);
     });
     this.cpu.recebaControle(Controle.IGUAL);
+    this.assert("1.2", Sinal.POSITIVO, false, false);
   }
 }

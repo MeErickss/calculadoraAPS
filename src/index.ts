@@ -28,10 +28,12 @@ class MinhaDisplay extends Display{
     }
 }
 
+
 const tela = new TelaB4()
 const cpu = new CpuB4(tela)
 const testeTela = new TestadorTela(tela)
-const testeCpu = new TestadorCpu(cpu)
+
+new TestadorCpu(cpu,true, true).executeTodosTestes()
 
 //cpu.recebaDigito(Digito.)
 //cpu.recebaControle(Controle.)
