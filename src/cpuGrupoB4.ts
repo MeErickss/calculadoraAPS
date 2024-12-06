@@ -44,7 +44,7 @@ export default class CpuB4 implements Cpu {
     opToString(operação: Operação): string {
         switch (operação) {
             case Operação.SOMA: return "+"
-            case Operação.SUBTRAÇÃO: return "-"//🐎
+            case Operação.SUBTRAÇÃO: return "-"  //🐎
             case Operação.DIVISÃO: return "/"
             case Operação.PERCENTUAL: return "*0.01" 
             case Operação.MULTIPLICAÇÃO: return "*"
