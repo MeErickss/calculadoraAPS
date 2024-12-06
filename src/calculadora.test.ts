@@ -42,7 +42,7 @@ describe('Testando minha calculadora',() =>{
       });
       
       cpu.recebaControle(Controle.IGUAL);
-      expect(tela.digitos).toBe("")
+      expect(tela.digitos).toBe("579")
       expect(tela.sinal).toBe(Sinal.POSITIVO)
       expect(tela.memoria).toBeFalsy()
       expect(tela.error).toBeFalsy()
@@ -51,7 +51,7 @@ describe('Testando minha calculadora',() =>{
     test ('Testar 12/10', ()=>{
       console.log("= Testando 12 / 10  ===========================");
       [Digito.UM, Digito.DOIS].forEach((element) => {
-        cpu.recebaDigito(lement);
+        cpu.recebaDigito(element);
       });
 
       cpu.recebaOperacao(Operação.DIVISÃO);
