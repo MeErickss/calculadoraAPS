@@ -41,12 +41,12 @@ export default class CpuB4 implements Cpu {
         this.digitoMemoria = "";
     }
 
-    opToString(operação: Operação): string {
+    opToString(operação: Operação): string | undefined {
         switch (operação) {
             case Operação.SOMA: return "+"
             case Operação.SUBTRAÇÃO: return "-"  //🐎
             case Operação.DIVISÃO: return "/"
-            case Operação.PERCENTUAL: return "*0.01" 
+            case Operação.PERCENTUAL: this.finalizarCalculo(); 
             case Operação.MULTIPLICAÇÃO: return "*"
             case Operação.RAIZ_QUADRADA: return "**0.5"
         }
@@ -56,8 +56,7 @@ export default class CpuB4 implements Cpu {
         try {
             const func = new Function('return ' + expressao)
             return func()
-        } catch (e) {
-            console.error("Erro na conversão da expressão:", e)
+        } catch(e) {
             return 0
         }
     }
@@ -110,20 +109,23 @@ export default class CpuB4 implements Cpu {
             return String(this.resolva(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
         } else if (this.op === Operação.RAIZ_QUADRADA) {
             return String(this.resolva(`${this.digitoUm}${this.opToString(this.op)}`));
-        } else {
+        } else if(this.op === Operação.PERCENTUAL){
             const percentual = this.resolva(this.digitoDois) * 0.01;
             const resultado = this.resolva(this.digitoUm) + percentual * this.resolva(this.digitoUm);
             return String(resultado);
         }
+        return ""
     }
     
     finalizarCalculo(): void { 
         if (this.digitoUm !== "" && this.digitoDois !== "") {
-            this.resultado = `${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`;
             this.digitoUm = this.calcularResultado();
+            console.log(this.digitoUm)
             this.completo = true;
-    
-            this.mostreDigitos(this.converteSringDigitos(this.digitoUm), this.digitoUm.startsWith("-") ? Sinal.NEGATIVO : Sinal.POSITIVO);
+            if (Number(this.digitoUm) != Infinity){
+
+                return this.mostreDigitos(this.converteSringDigitos(this.digitoUm), this.digitoUm.startsWith("-") ? Sinal.NEGATIVO : Sinal.POSITIVO);
+            } else {this.tela?.mostreErro()}    
         }
     }
 
@@ -156,6 +158,7 @@ export default class CpuB4 implements Cpu {
         this.leLimpa = false;
         this.completo = false;
         this.tela ? this.tela.mostre(Digito.ZERO) : null
+        this.tela?.limpe()
     }
 
     definaTela(tela: Tela | undefined): void {

@@ -1,7 +1,7 @@
 import CpuB4 from "./cpuGrupoB4";
 import { Digito, Operação, Controle, Sinal } from "./calculadora"
 import { TestadorTela, TestadorCpu } from "./calculadoraTestes"
-import  TelaB4  from "./telaGrupoB4"
+import  TelaB4  from "./telaX0Teste"
 
 export interface IDisplay {
     showNumber(value: number) : void;
@@ -31,9 +31,9 @@ class MinhaDisplay extends Display{
 
 const tela = new TelaB4()
 const cpu = new CpuB4(tela)
-const testeTela = new TestadorTela(tela)
+//const testeTela = new TestadorTela(tela)
 
-new TestadorCpu(cpu,true, true).executeTodosTestes()
+//new TestadorCpu(cpu,true, true).executeTodosTestes()
 
 //cpu.recebaDigito(Digito.)
 //cpu.recebaControle(Controle.)
@@ -56,7 +56,7 @@ new TestadorCpu(cpu,true, true).executeTodosTestes()
 //
 //cpu.recebaDigito(Digito.NOVE)
 //cpu.recebaOperacao(Operação.DIVISÃO)
-//cpu.recebaDigito(Digito.NOVE)
+//cpu.recebaDigito(Digito.ZERO)
 //cpu.recebaControle(Controle.IGUAL)
 //
 //cpu.recebaDigito(Digito.DOIS)
@@ -67,11 +67,9 @@ new TestadorCpu(cpu,true, true).executeTodosTestes()
 //
 //cpu.recebaDigito(Digito.UM)
 //cpu.recebaDigito(Digito.ZERO)
-//cpu.recebaDigito(Digito.ZERO)
-//cpu.recebaOperacao(Operação.SOMA)
-//cpu.recebaDigito(Digito.DOIS)
-//cpu.recebaDigito(Digito.DOIS)
 //cpu.recebaOperacao(Operação.PERCENTUAL)
+//cpu.recebaDigito(Digito.DOIS)
+//cpu.recebaDigito(Digito.DOIS)
 //cpu.recebaControle(Controle.IGUAL)
 //
 //cpu.recebaDigito(Digito.UM)
