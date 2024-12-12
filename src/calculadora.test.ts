@@ -610,9 +610,6 @@ describe('Testando minha calculadora', () => {
     // Teste Memoria
      test('Testar 10, M+,  ', () => {
        console.log("= Testando 10 + 1.5 ===========================");
-       [Digito.UM, Digito.ZERO].forEach((element) => {
-         cpu.recebaDigito(element);
-       });
 
        cpu.recebaDigito(Digito.UM)
        cpu.recebaDigito(Digito.DOIS)
@@ -629,9 +626,4 @@ describe('Testando minha calculadora', () => {
        expect(tela.memoria).toBeFalsy()
        expect(tela.error).toBeFalsy()
      })
-
-
-
-
-
   })
