@@ -25,6 +25,7 @@ export default class TelaX0Teste implements Tela {
     if (this.debug) console.log("E");
   }
   mostre(digito: Digito): void {
+    this.debug = true
     this.digitos += digito;
     if (this.debug) console.log(digito);
   }

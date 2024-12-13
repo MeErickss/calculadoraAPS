@@ -579,7 +579,6 @@ describe('Testando minha calculadora', () => {
       });
 
       cpu.recebaOperacao(Operação.PERCENTUAL);
-      cpu.recebaControle(Controle.IGUAL);
 
       
 
