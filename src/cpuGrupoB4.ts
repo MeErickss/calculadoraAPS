@@ -1,6 +1,6 @@
 import { Controle, Cpu, Digito, Operação, Tela, Sinal } from "./calculadora";
 
-export default class CpuB4 implements Cpu {
+export default class CpuB4 implements Cpu { //🐎
     tela: Tela | undefined;
     digitoMemoria = "";
     digitoUm = "";
@@ -40,7 +40,7 @@ export default class CpuB4 implements Cpu {
     }
 
     opToString(operação: Operação): string | undefined {
-        const opMap: { [key in Operação]: string } = {
+        const opMap: { [key in Operação]: string } = { //🐎
             [Operação.SOMA]: "+",
             [Operação.SUBTRAÇÃO]: "-",
             [Operação.DIVISÃO]: "/",
@@ -79,7 +79,7 @@ export default class CpuB4 implements Cpu {
     }
 
     recebaOperacao(operação: Operação): void {
-        this.leLimpa = false;
+        this.leLimpa = false; //🐎
 
         if (operação === Operação.PERCENTUAL && this.digitoDois==""){this.mostreDigitos(this.converteSringDigitos("0"), Sinal.POSITIVO);} else if(operação === Operação.PERCENTUAL) {
             this.percentual = true;
@@ -107,7 +107,7 @@ export default class CpuB4 implements Cpu {
             case Controle.DESATIVAÇÃO:
             case Controle.ATIVAÇÃO_LIMPEZA_ERRO:this.limpa();break;
             case Controle.MEMÓRIA_LEITURA_LIMPEZA:this.controleMemoria("=");break;
-            case Controle.MEMÓRIA_SOMA:this.controleMemoria("+");break;
+            case Controle.MEMÓRIA_SOMA:this.controleMemoria("+");break; //🐎
             case Controle.MEMÓRIA_SUBTRAÇÃO:this.controleMemoria("-");break;
             case Controle.SEPARADOR_DECIMAL:this.adicionaDecimal();break;
             case Controle.IGUAL:this.finalizarCalculo();break;
@@ -132,7 +132,7 @@ export default class CpuB4 implements Cpu {
             return String(this.resolva(`${this.digitoUm}${this.opToString(this.op || Operação.SOMA)}${this.digitoDois}`));
         }
     }
-
+ //🐎
     finalizarCalculo(): void {
         if (this.digitoUm !== "" && this.digitoDois !== "") {
             this.digitoUm = this.calcularResultado();
@@ -154,7 +154,7 @@ export default class CpuB4 implements Cpu {
 
     controleMemoria(operador: string): void {
         if (operador === "=") {
-            if (!this.leLimpa) {
+            if (!this.leLimpa) { //🐎
                 if (this.digitoDois === "") {
                     this.digitoUm = this.digitoMemoria;
                 } else {
@@ -188,3 +188,4 @@ export default class CpuB4 implements Cpu {
         return this.tela;
     }
 }
+ //🐎
